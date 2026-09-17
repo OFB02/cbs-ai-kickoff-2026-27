@@ -1,3 +1,4 @@
+<meta charset="utf-8">
 <title>CBS AI Kickoff 2026/27</title>
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -261,42 +262,85 @@
   .focus span { font-size: 21px; line-height: 1.4; color: #dfe5ff; }
 
   /* ================= Organization ================= */
-  .org-stats { position: absolute; right: 120px; top: 166px; display: flex; align-items: baseline; gap: 26px; }
-  .org-stats div { display: flex; align-items: baseline; gap: 12px; }
-  .org-stats b { font-family: var(--display); font-size: 76px; font-weight: 700; letter-spacing: -0.04em; color: var(--navy); line-height: 1; font-variant-numeric: tabular-nums; }
-  .org-stats span { font-size: 26px; font-weight: 600; color: var(--mute); }
-  .org-stats i { width: 2px; height: 56px; background: var(--line); align-self: center; }
+  .s-org { background: #f2f1ee; }
+  .s-org .headline, .s-org .board, .s-org .units { position: relative; z-index: 1; }
+  .s-org .org-stats, .s-org .org-foot { z-index: 1; }
+  .s-org .blob { position: absolute; border-radius: 50%; background: #e6e5f2; z-index: 0; }
+  .s-org .blob.tr { right: -170px; top: -200px; width: 540px; height: 540px; }
+  .s-org .blob.bl { left: -220px; bottom: -300px; width: 680px; height: 680px; }
+  .s-org .headline { color: #23273a; }
+  .s-org .headline .yr { color: var(--navy); }
+  .org-stats { position: absolute; right: 120px; top: 178px; display: flex; gap: 18px; }
+  .org-stats .chip { background: var(--white); border-radius: 999px; padding: 15px 34px; font-size: 22px; font-weight: 500; color: #3c4256; box-shadow: 0 3px 12px rgba(20,24,60,.06); }
   .board {
-    position: relative; margin-top: 36px;
-    display: grid; grid-template-columns: 170px repeat(5, 1fr); align-items: center;
-    background: var(--navy); color: var(--white); border-radius: 22px; padding: 22px 40px;
+    margin-top: 32px;
+    background: var(--navy); color: var(--white); border-radius: 20px; padding: 26px 30px 28px;
   }
-  .board::after { content: ""; position: absolute; left: 50%; top: 100%; width: 2px; height: 30px; background: var(--brand); }
-  .board > h3 { font-family: var(--display); font-weight: 700; font-size: 34px; letter-spacing: -0.01em; border-right: 1.5px solid rgba(185,198,255,.3); height: 100%; display: flex; align-items: center; }
-  .board .seat { padding-left: 32px; display: flex; flex-direction: column; gap: 4px; }
-  .board .seat span { font-size: 16px; font-weight: 600; letter-spacing: .12em; text-transform: uppercase; color: var(--ice); }
-  .board .seat strong { font-size: 26px; font-weight: 600; letter-spacing: -0.01em; }
-  .units { position: relative; margin-top: 56px; display: grid; grid-template-columns: repeat(5, 1fr) 1.42fr; gap: 28px; align-items: start; }
-  .ucol { position: relative; padding-top: 16px; border-top: 3px solid var(--brand); }
-  .ucol::before { content: ""; position: absolute; left: 24px; top: -29px; width: 2px; height: 26px; background: var(--brand); }
-  .ucol::after { content: ""; position: absolute; left: 24px; top: -29px; width: calc(100% + 28px); height: 2px; background: var(--brand); }
-  .ucol:last-child::after { display: none; }
-  .ucol .tap { position: absolute; left: 19px; top: -34px; width: 12px; height: 12px; border-radius: 50%; background: var(--signal); z-index: 1; }
-  .ucol h3 { font-family: var(--display); font-weight: 700; font-size: 27px; line-height: 1.08; letter-spacing: -0.015em; color: var(--navy); min-height: 58px; padding-right: 44px; }
-  .ucol .head { margin-top: 10px; font-size: 17px; font-weight: 700; letter-spacing: .1em; text-transform: uppercase; color: var(--cobalt); }
-  .ucol ul { list-style: none; margin: 14px 0 0; padding: 0; display: flex; flex-direction: column; gap: 8px; }
-  .ucol li { font-size: 21px; line-height: 1.25; color: var(--ink); }
-  .ucol li small { display: block; font-size: 16px; color: var(--mute); margin-top: 2px; }
-  .ucol.academy { background: var(--white); border: 2px solid var(--line); border-top: 3px solid var(--navy); border-radius: 0 0 18px 18px; padding: 16px 22px 18px; }
-  .ucol.academy ul { gap: 9px; }
-  .step { position: absolute; right: 0; top: 14px; width: 36px; height: 36px; border-radius: 50%; background: var(--signal); color: var(--white); font-size: 18px; font-weight: 700; display: grid; place-items: center; box-shadow: 0 0 0 6px rgba(82,113,255,.16); }
-  .ucol.lit { border-top-color: var(--signal); }
-  .event-flow { position: absolute; left: 120px; top: 770px; width: 1312px; display: grid; grid-template-columns: repeat(3, 1fr); gap: 20px 40px; padding: 30px 36px 32px; background: var(--white); border: 2px solid var(--line); border-radius: 22px; font-size: 22px; color: var(--ink); }
-  .event-flow > strong { grid-column: 1 / -1; font-family: var(--display); font-size: 28px; font-weight: 700; color: var(--navy); letter-spacing: -0.01em; }
-  .event-flow .s { display: flex; align-items: flex-start; gap: 16px; position: relative; }
-  .event-flow .s span { display: flex; flex-direction: column; gap: 2px; line-height: 1.3; color: var(--mute); }
-  .event-flow .s b { font-weight: 600; font-size: 24px; color: var(--ink); }
-  .event-flow .s i { font-style: normal; width: 32px; height: 32px; border-radius: 50%; background: var(--signal); color: var(--white); font-size: 15px; font-weight: 700; display: grid; place-items: center; flex: none; }
+  .board::after { content: ""; position: absolute; left: 50%; top: 100%; width: 2px; height: 20px; background: #ccd3e8; }
+  .board > h3 { font-family: var(--display); font-weight: 700; font-size: 21px; letter-spacing: .24em; text-transform: uppercase; margin: 0 0 20px 8px; }
+  .board .seats { display: flex; justify-content: space-between; gap: 14px; flex-wrap: nowrap; }
+  .board .seat { display: flex; align-items: baseline; gap: 11px; background: rgba(255,255,255,.08); border: 1.5px solid rgba(185,198,255,.35); border-radius: 10px; padding: 13px 22px; white-space: nowrap; }
+  .board .seat span { font-size: 13px; font-weight: 600; letter-spacing: .12em; text-transform: uppercase; color: #d3ad6a; }
+  .board .seat strong { font-size: 21px; font-weight: 600; letter-spacing: -0.01em; }
+  .units { position: relative; margin-top: 56px; display: grid; grid-template-columns: repeat(5, 1fr) 1.28fr; gap: 24px; align-items: start; }
+  .ucard { position: relative; background: var(--white); border-radius: 14px; box-shadow: 0 12px 28px rgba(20,24,60,.10); }
+  .ucard::before { content: ""; position: absolute; left: 50%; top: -38px; width: 2px; height: 38px; background: #ccd3e8; }
+  .ucard::after { content: ""; position: absolute; left: 50%; top: -38px; width: calc(100% + 24px); height: 2px; background: #ccd3e8; }
+  .ucard:last-child::after { display: none; }
+  .ucard header { background: var(--navy); color: var(--white); text-align: center; padding: 22px 16px 20px; border-radius: 14px; box-shadow: 0 6px 16px rgba(20,24,60,.18); }
+  .ucard header h3 { font-family: var(--display); font-weight: 700; font-size: 26px; line-height: 1.12; letter-spacing: -0.01em; }
+  .ucard header p { margin-top: 7px; font-size: 15px; font-weight: 500; color: #9fb0e8; }
+  .ucard header p b { font-size: 19px; font-weight: 600; color: var(--white); }
+  .ucard ul { list-style: none; margin: 0; padding: 8px 22px 10px; }
+  .ucard li { padding: 8px 0; border-bottom: 1.5px solid #e6e9f2; font-size: 20px; line-height: 1.25; color: #2f3442; }
+  .ucard li:last-child { border-bottom: 0; }
+  .ucard li small { display: block; font-size: 15px; color: #8b93a8; margin-top: 3px; }
+  .org-foot { position: absolute; left: 120px; bottom: 66px; font-size: 17px; color: #9aa3b8; }
+
+  /* ================= How we build an event ================= */
+  .relay { position: absolute; left: 120px; right: 120px; top: 390px; display: grid; grid-template-columns: repeat(4, 1fr); gap: 44px; }
+  .rstep { position: relative; background: var(--white); border: 2px solid var(--line); border-radius: 26px; padding: 42px 36px 46px; display: flex; flex-direction: column; gap: 18px; box-shadow: 0 14px 36px rgba(6,13,51,.06); }
+  .rstep > i { font-style: normal; width: 56px; height: 56px; border-radius: 50%; background: var(--signal); color: var(--white); font-family: var(--display); font-size: 27px; font-weight: 700; display: grid; place-items: center; box-shadow: 0 0 0 9px rgba(82,113,255,.14); }
+  .rstep h3 { font-family: var(--display); font-weight: 700; font-size: 34px; line-height: 1.1; letter-spacing: -0.02em; color: var(--navy); }
+  .rstep p { font-size: 23px; line-height: 1.45; color: var(--mute); }
+  .rstep:not(:last-child)::after { content: ""; position: absolute; top: 50%; right: -34px; width: 24px; height: 24px; border-top: 4px solid var(--signal); border-right: 4px solid var(--signal); transform: translateY(-50%) rotate(45deg); }
+  .loop { position: absolute; left: 120px; right: 120px; top: 830px; height: 180px; }
+  .loop svg { width: 100%; height: 100%; display: block; overflow: visible; }
+  .loop path { stroke: var(--signal); stroke-width: 3.5; fill: none; stroke-linecap: round; stroke-linejoin: round; }
+  .loop path.curve { stroke-dasharray: 3 14; }
+  .loop path.ah { stroke-width: 4.5; }
+  .loop text { font-family: var(--body); font-size: 24px; font-weight: 500; fill: var(--mute); }
+
+  /* ================= Partnerships ================= */
+  .pgrid { position: absolute; left: 120px; right: 120px; top: 360px; display: grid; grid-template-columns: 310px 1fr 1fr; gap: 28px; align-items: stretch; }
+  .pbro { position: relative; align-self: start; aspect-ratio: 595 / 842; border-radius: 18px; overflow: hidden; background: var(--white); border: 2px solid var(--line); box-shadow: 0 18px 44px rgba(6,13,51,.16); }
+  .pbro img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: contain; display: block; }
+  .pcard { background: var(--white); border: 2px solid var(--line); border-radius: 26px; padding: 42px 48px 46px; box-shadow: 0 14px 36px rgba(6,13,51,.06); }
+  .pcard h3 { font-family: var(--display); font-weight: 700; font-size: 36px; letter-spacing: -0.02em; color: var(--navy); display: flex; align-items: center; gap: 16px; }
+  .pcard ul { list-style: none; margin: 24px 0 0; padding: 0; display: flex; flex-direction: column; gap: 22px; }
+  .pcard li { position: relative; padding-left: 36px; font-size: 23px; line-height: 1.42; color: var(--mute); }
+  .pcard li b { color: var(--ink); font-weight: 600; }
+  .pcard li::before { content: ""; position: absolute; left: 0; top: 9px; width: 13px; height: 13px; border-radius: 50%; border: 3px solid var(--signal); background: var(--white); }
+  .pcard.crm { background: var(--navy); border-color: var(--navy); }
+  .pcard.crm h3 { color: var(--white); }
+  .pcard.crm .badge { font-size: 15px; font-weight: 700; letter-spacing: .12em; text-transform: uppercase; color: var(--white); background: var(--signal); padding: 7px 16px; border-radius: 999px; }
+  .pcard.crm li { color: #dfe5ff; }
+  .pcard.crm li b { color: var(--white); }
+  .pcard.crm li::before { background: var(--signal); border-color: var(--signal); box-shadow: 0 0 0 5px rgba(82,113,255,.28); }
+  .pcard.crm .link-btn { margin-top: 30px; font-size: 22px; }
+  .pcard.crm .link-btn.solid:hover { background: var(--white); color: var(--navy); }
+  .pipe { position: absolute; left: 120px; right: 120px; top: 872px; display: flex; align-items: center; gap: 14px; }
+  .pipe .plabel { position: absolute; top: -40px; left: 4px; font-size: 17px; font-weight: 700; letter-spacing: .1em; text-transform: uppercase; color: var(--cobalt); }
+  .pipe .pstage { flex: 1; text-align: center; background: var(--white); border: 2px solid var(--line); border-radius: 18px; padding: 14px 14px 16px; }
+  .pipe .pstage b { display: block; font-size: 22px; font-weight: 600; color: var(--ink); }
+  .pipe .pstage span { display: block; margin-top: 4px; font-size: 16px; line-height: 1.3; color: var(--mute); }
+  .pipe .pstage.done { background: var(--signal); border-color: var(--signal); }
+  .pipe .pstage.done b { color: var(--white); }
+  .pipe .pstage.done span { color: #dfe5ff; }
+  .pipe .pstage.lost { background: transparent; border-style: dashed; }
+  .pipe .pstage.lost b { color: var(--mute); }
+  .pipe .sep { width: 2px; height: 52px; background: var(--line); margin: 0 12px; flex: none; }
+  .pipe i { width: 13px; height: 13px; border-top: 3.5px solid var(--signal); border-right: 3.5px solid var(--signal); transform: rotate(45deg); flex: none; }
 
   /* ================= Expectations ================= */
   .exchange { position: absolute; left: 120px; right: 120px; top: 300px; bottom: 150px; display: grid; grid-template-columns: 1fr 1fr; gap: 32px; }
@@ -502,7 +546,7 @@
       <nav class="agenda" aria-label="Agenda">
         <button type="button" class="rv" style="--i:1" data-target="s-mission"><span class="num">01</span><span class="ttl">Who we are</span><span class="dsc">Our purpose, and why CBS × AI matters</span></button>
         <button type="button" class="rv" style="--i:2" data-target="s-do"><span class="num">02</span><span class="ttl">What we do</span><span class="dsc">Our activities, the road so far and our new website</span></button>
-        <button type="button" class="rv" style="--i:3" data-target="s-org"><span class="num">03</span><span class="ttl">The team</span><span class="dsc">28 people, 7 units, and how we talk</span></button>
+        <button type="button" class="rv" style="--i:3" data-target="s-org"><span class="num">03</span><span class="ttl">The team</span><span class="dsc">27 people, 7 units, and how we talk</span></button>
         <button type="button" class="rv" style="--i:4" data-target="s-expect"><span class="num">04</span><span class="ttl">What to expect</span><span class="dsc">What we ask of you, and your first task</span></button>
       </nav>
     </section>
@@ -581,8 +625,8 @@
     </section>
 
     <!-- 02 · Journey -->
-    <section class="slide tone-dark s-journey" data-tone="dark" data-part="02|What we do" aria-label="Where We Started, Where We Are Going">
-      <h2 class="headline rv" style="--i:0">Where We Started, Where We Are Going</h2>
+    <section class="slide tone-dark s-journey" data-tone="dark" data-part="02|What we do" aria-label="Where We Started - Where We Are Going">
+      <h2 class="headline rv" style="--i:0">Where We Started - Where We Are Going</h2>
       <div class="journey-legend rv" style="--i:0" aria-hidden="true"><span><i class="m"></i>Milestone</span><span><i class="e"></i>Event</span></div>
       <ol class="tl" role="list" style="margin:0;padding:0;list-style:none">
         <li class="tl-item ms rv" style="--i:1"><i class="tl-node"></i><div class="tl-label up"><time>Jan 2024</time><strong>CBS AI founded</strong></div></li>
@@ -650,65 +694,127 @@
     </section>
 
     <!-- 03 · Organization -->
-    <section class="slide tone-light s-org" id="s-org" data-tone="light" data-part="03|The team" aria-label="The 2026/27 Organization">
-      <h2 class="headline rv" style="--i:0">The 2026/27 Organization</h2>
+    <section class="slide tone-light s-org" id="s-org" data-tone="light" data-part="03|The team" aria-label="Team Structure 2026/27">
+      <div class="blob tr" aria-hidden="true"></div>
+      <div class="blob bl" aria-hidden="true"></div>
+      <h2 class="headline rv" style="--i:0">Team Structure <span class="yr">2026/27</span></h2>
       <div class="org-stats rv" style="--i:1">
-        <div><b>28</b><span>People</span></div><i aria-hidden="true"></i><div><b>7</b><span>Units</span></div>
+        <span class="chip">7 units</span><span class="chip">27 people</span>
       </div>
 
       <div class="board rv" style="--i:2">
         <h3>Board</h3>
-        <div class="seat"><span>President</span><strong>Nicklas Hampe</strong></div>
-        <div class="seat"><span>Vice President</span><strong>Lucas Buch</strong></div>
-        <div class="seat"><span>Academy</span><strong>Darina Starodumova</strong></div>
-        <div class="seat"><span>Funding</span><strong>Oskar Bugge</strong></div>
-        <div class="seat"><span>Founder</span><strong>Oskar Bührmann</strong></div>
+        <div class="seats">
+          <div class="seat"><strong>Nicklas Hampe</strong><span>President</span></div>
+          <div class="seat"><strong>Lucas Buch</strong><span>Vice President</span></div>
+          <div class="seat"><strong>Darina Starodumova</strong><span>Academy</span></div>
+          <div class="seat"><strong>Oskar Bugge</strong><span>Funding</span></div>
+          <div class="seat"><strong>Oskar Bührmann</strong><span>Founder</span></div>
+        </div>
       </div>
 
       <div class="units">
-        <div class="ucol rv" style="--i:3"><i class="tap"></i>
-          <h3>People &amp; Organisation</h3>
-          <p class="head">Nic Philipps</p>
+        <div class="ucard rv" style="--i:3">
+          <header><h3>People &amp; Organisation</h3><p>Head · <b>Nic Philipps</b></p></header>
         </div>
-        <div class="ucol rv" style="--i:4"><i class="tap"></i>
-          <h3>Funding</h3>
-          <p class="head">Oskar Bugge</p>
+        <div class="ucard rv" style="--i:4">
+          <header><h3>Funding</h3><p>Head · <b>Oskar Bugge</b></p></header>
           <ul><li>Elias Ribe</li></ul>
         </div>
-        <div class="ucol lit rv" style="--i:5"><i class="tap"></i><span class="step" aria-label="Event step 1">1</span>
-          <h3>Partnerships</h3>
-          <p class="head">Lucas Buch</p>
+        <div class="ucard rv" style="--i:5">
+          <header><h3>Partnerships</h3><p>Head · <b>Lucas Buch</b></p></header>
           <ul><li>Magnus Christoffersen</li><li>Isa Walsh</li><li>Anil Sahin</li><li>Mikkel Tufto-Antonsen</li></ul>
         </div>
-        <div class="ucol lit rv" style="--i:6"><i class="tap"></i><span class="step" aria-label="Event step 2">2</span>
-          <h3>Marketing &amp; Community</h3>
-          <p class="head">Sieun Lee</p>
+        <div class="ucard rv" style="--i:6">
+          <header><h3>Marketing &amp; Community</h3><p>Head · <b>Sieun Lee</b></p></header>
           <ul><li>Ester</li><li>Alexander</li><li>Laurits</li><li>David</li></ul>
         </div>
-        <div class="ucol lit rv" style="--i:7"><i class="tap"></i><span class="step" aria-label="Event step 3">3</span>
-          <h3>Operations</h3>
-          <p class="head">Ellen Lansfjord</p>
+        <div class="ucard rv" style="--i:7">
+          <header><h3>Operations</h3><p>Head · <b>Ellen Lansfjord</b></p></header>
           <ul><li>Vanessa Begovic</li><li>Natasha</li><li>Clara</li><li>William Munch Holst</li><li>Otto Nordraak</li></ul>
         </div>
-        <div class="ucol academy rv" style="--i:8"><i class="tap"></i>
-          <h3>Academy</h3>
-          <p class="head">Darina Starodumova</p>
+        <div class="ucard rv" style="--i:8">
+          <header><h3>Academy</h3><p>Head · <b>Darina Starodumova</b></p></header>
           <ul>
             <li>Ahmad Al Wazani<small>Tech &amp; Knowledge</small></li>
             <li>Grzegorz Piotr Robaczyk<small>Programme &amp; Learning</small></li>
             <li>Liv Ahnlund<small>Partnerships &amp; Stakeholder Mgmt</small></li>
             <li>Huda Al-Bazy<small>Volunteer &amp; Social Media</small></li>
             <li>Enzo Miles-Bebber<small>Marketing &amp; Demand Gen.</small></li>
-            <li>Jaroslav Denemark<small>Activation</small></li>
           </ul>
         </div>
       </div>
 
-      <div class="event-flow rv" style="--i:9">
-        <strong>How we build an event</strong>
-        <div class="s"><i>1</i><span><b>Partnerships</b>secures the industry speaker</span></div>
-        <div class="s"><i>2</i><span><b>Marketing</b>fills the room</span></div>
-        <div class="s"><i>3</i><span><b>Operations</b>executes on the floor</span></div>
+      <p class="org-foot rv" style="--i:9">CBS AI · Team Structure 2026/2027</p>
+    </section>
+
+    <!-- 03 · How we build an event -->
+    <section class="slide tone-light s-event" id="s-event" data-tone="light" data-part="03|The team" aria-label="How We Build an Event">
+      <h2 class="headline rv" style="--i:0">How We Build an Event</h2>
+      <p class="lede rv" style="--i:1; margin-top: 24px">Four units, one relay. Every event passes through the same hands.</p>
+      <div class="relay">
+        <div class="rstep rv" style="--i:2">
+          <i>1</i>
+          <h3>Partnerships</h3>
+          <p>Secures the industry speaker and the sponsorships each event needs, briefed by Operations on what is required.</p>
+        </div>
+        <div class="rstep rv" style="--i:3">
+          <i>2</i>
+          <h3>Funding</h3>
+          <p>Steps in with the budget and financial backing that turn the plan into something we can run.</p>
+        </div>
+        <div class="rstep rv" style="--i:4">
+          <i>3</i>
+          <h3>Marketing &amp; Community</h3>
+          <p>Fills the room with campaigns, social media and outreach to the CBS community.</p>
+        </div>
+        <div class="rstep rv" style="--i:5">
+          <i>4</i>
+          <h3>Operations</h3>
+          <p>Executes on the floor: logistics, setup and the experience on the day.</p>
+        </div>
+      </div>
+      <div class="loop rv" style="--i:6" aria-hidden="true">
+        <svg viewBox="0 0 1680 180">
+          <path class="curve" d="M 252 44 C 500 150, 1180 150, 1428 44"/>
+          <path class="ah" d="M -11 -14 L 5 0 L -11 14" fill="none" transform="translate(228, 30) rotate(203)"/>
+          <path class="ah" d="M -11 -14 L 5 0 L -11 14" fill="none" transform="translate(1452, 30) rotate(-23)"/>
+          <text x="840" y="160" text-anchor="middle">Back and forth: Operations briefs Partnerships on what each event needs</text>
+        </svg>
+      </div>
+    </section>
+
+    <!-- 03 · Partnerships -->
+    <section class="slide tone-light s-pship" id="s-pship" data-tone="light" data-part="03|The team" aria-label="Inside Partnerships">
+      <h2 class="headline rv" style="--i:0">Inside Partnerships</h2>
+      <p class="lede rv" style="--i:1; margin-top: 24px">What we build with companies, and the new system that keeps it running.</p>
+      <div class="pgrid">
+        <figure class="pbro rv" style="--i:2; margin:0"><img src="assets/brochure-cover.png" alt="Front page of the CBS AI partner brochure: Partner with us, academic year 2026/27"></figure>
+        <div class="pcard rv" style="--i:3">
+          <h3>The work</h3>
+          <ul>
+            <li><b>Industry speakers.</b> Practitioners from firms like Microsoft, BCG and Accenture on our stages.</li>
+            <li><b>Sponsorships.</b> The funding and prizes that keep our events free for students.</li>
+            <li><b>Relationships that last.</b> Partners who come back year after year, from SAP to Lovable.</li>
+          </ul>
+        </div>
+        <div class="pcard crm rv" style="--i:4">
+          <h3>Our new CRM <span class="badge">New</span></h3>
+          <ul>
+            <li><b>One shared pipeline.</b> Every company, contact and deal lives in one place.</li>
+            <li><b>Nothing gets lost.</b> Full history on every partner, so handovers keep the context.</li>
+            <li><b>Clear ownership.</b> Every dialogue has an owner and a next step.</li>
+          </ul>
+          <a class="link-btn solid" href="https://cbs-ai-os.vercel.app/dashboard" target="_blank" rel="noopener">See it live<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M14 4h6v6M20 4l-9 9M18 14v5a1 1 0 0 1-1 1H5a1 1 0 0 1-1-1V7a1 1 0 0 1 1-1h5"/></svg></a>
+        </div>
+      </div>
+      <div class="pipe rv" style="--i:5" aria-label="CRM pipeline stages">
+        <span class="plabel">How a deal moves in the CRM</span>
+        <div class="pstage"><b>New</b><span>Have not worked together yet, maybe talked</span></div><i aria-hidden="true"></i>
+        <div class="pstage"><b>Good terms</b><span>Went fine, would say yes to the next one</span></div><i aria-hidden="true"></i>
+        <div class="pstage done"><b>Working together</b><span>An agreement in place right now</span></div>
+        <div class="sep" aria-hidden="true"></div>
+        <div class="pstage lost"><b>Lost</b><span>Said no, went badly, or the contact left</span></div>
       </div>
     </section>
 
@@ -810,10 +916,10 @@
         <h3>The day</h3>
         <ol>
           <li><time>08:00</time><strong>Coffee, tea &amp; croissants</strong><span>Outside Nexus</span></li>
-          <li><time>08:00–09:00</time><strong>Morning setup</strong></li>
-          <li class="key"><time>09:00–16:00</time><strong>Booth shifts</strong><span>Five time slots, two volunteers each</span></li>
-          <li><time>16:00–16:30</time><strong>Take-down &amp; clean-up</strong></li>
-          <li class="key"><time>16:30–19:00</time><strong>After-mingle in Nexus</strong><span>Drink tickets handed out at the end of the day</span></li>
+          <li><time>08:00-09:00</time><strong>Morning setup</strong></li>
+          <li class="key"><time>09:00-16:00</time><strong>Booth shifts</strong><span>Five time slots, two volunteers each</span></li>
+          <li><time>16:00-16:30</time><strong>Take-down &amp; clean-up</strong></li>
+          <li class="key"><time>16:30-19:00</time><strong>After-mingle in Nexus</strong><span>Drink tickets handed out at the end of the day</span></li>
         </ol>
       </div>
     </section>
@@ -854,8 +960,9 @@
 
   function fit() {
     var s = Math.min(window.innerWidth / 1920, window.innerHeight / 1080);
-    stage.style.setProperty('--scale', s);
+    if (s > 0) stage.style.setProperty('--scale', s);
   }
+  document.addEventListener('visibilitychange', fit);
 
   function renderPart(label) {
     part.textContent = '';
@@ -938,7 +1045,7 @@
   });
 
   // New website link: paste the URL between the quotes when it is ready, e.g. 'https://example.dk'
-  var WEBSITE_URL = '';
+  var WEBSITE_URL = 'https://cbsai.dk/';
   Array.prototype.forEach.call(stage.querySelectorAll('[data-site-link]'), function (a) {
     var label = a.querySelector('[data-site-label]');
     if (WEBSITE_URL) {
