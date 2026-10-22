@@ -387,6 +387,27 @@
   .q-card .who { font-family: var(--mono); font-size: 19px; color: var(--amber); }
   .q-card .prompt { font-family: var(--mono); font-size: 16px; letter-spacing: .08em; text-transform: uppercase; color: var(--ice); }
 
+  /* ================= Student orgs ================= */
+  .s-orgs { display: grid; grid-template-columns: 720px 1fr; gap: 90px; align-items: center; }
+  .orgs-copy { display: flex; flex-direction: column; gap: 36px; }
+  .founded { background: var(--red); border-radius: 30px; padding: 40px 44px; display: flex; flex-direction: column; gap: 10px; }
+  .founded .lbl { font-family: var(--mono); font-size: 18px; letter-spacing: .14em; text-transform: uppercase; opacity: .85; }
+  .founded .name { font-family: var(--display); font-weight: 800; font-size: 96px; line-height: .95; letter-spacing: -0.04em; }
+  .founded p { font-size: 25px; line-height: 1.45; }
+  .cloud { display: flex; flex-wrap: wrap; gap: 18px; align-content: center; }
+  .cloud li { font-family: var(--display); font-weight: 700; font-size: 38px; letter-spacing: -0.02em; padding: 16px 30px; border-radius: 999px; transition: transform .25s ease; }
+  .cloud li:hover { transform: translateY(-4px) rotate(-2deg); }
+  .cloud .mine { background: var(--red); color: var(--snow); }
+  .cloud .real { background: var(--snow); color: var(--ink); }
+  .cloud .idea { border: 2.5px dashed rgba(169,186,211,.6); color: var(--ice); }
+  .cloud .yours { border: 2.5px dashed var(--amber); color: var(--amber); }
+  .legend { display: flex; gap: 34px; font-family: var(--mono); font-size: 19px; color: var(--ice); margin-top: 14px; }
+  .legend span { display: inline-flex; align-items: center; gap: 12px; }
+  .legend i { width: 30px; height: 18px; border-radius: 999px; display: inline-block; }
+  .legend .l-real { background: var(--snow); }
+  .legend .l-idea { border: 2px dashed rgba(169,186,211,.7); }
+  .orgs-right { display: flex; flex-direction: column; gap: 24px; }
+
   /* ================= Food ================= */
   .s-food { display: grid; grid-template-columns: 600px 1fr; gap: 110px; align-items: center; }
   .receipt { position: relative; background: #fffdf8; color: #1c1c1c; font-family: var(--mono); padding: 46px 46px 70px; transform: rotate(-3deg); box-shadow: 0 30px 60px rgba(11,22,38,.18); }
@@ -737,7 +758,7 @@
       <div class="f-left">
         <h2 class="headline rv" style="--i:0">What actually helped us</h2>
         <ul class="helped">
-          <li class="rv" style="--i:1"><span class="ck"><svg viewBox="0 0 48 48" fill="none" stroke="currentColor" stroke-width="5" stroke-linecap="round" stroke-linejoin="round"><path d="M10 25l9 9 19-20"/></svg></span><span><b>Join a student organisation.</b> The fastest way to Danish friends.</span></li>
+          <li class="rv" style="--i:1"><span class="ck"><svg viewBox="0 0 48 48" fill="none" stroke="currentColor" stroke-width="5" stroke-linecap="round" stroke-linejoin="round"><path d="M10 25l9 9 19-20"/></svg></span><span><b>Join (or create) a student organisation.</b> The fastest way to Danish friends.</span></li>
           <li class="rv" style="--i:2"><span class="ck"><svg viewBox="0 0 48 48" fill="none" stroke="currentColor" stroke-width="5" stroke-linecap="round" stroke-linejoin="round"><path d="M10 25l9 9 19-20"/></svg></span><span><b>Go to Friday bars.</b> Same faces every week turn into friends.</span></li>
           <li class="rv" style="--i:3"><span class="ck"><svg viewBox="0 0 48 48" fill="none" stroke="currentColor" stroke-width="5" stroke-linecap="round" stroke-linejoin="round"><path d="M10 25l9 9 19-20"/></svg></span><span><b>Say yes.</b> To dinners, study groups and random invites.</span></li>
           <li class="rv" style="--i:4"><span class="ck"><svg viewBox="0 0 48 48" fill="none" stroke="currentColor" stroke-width="5" stroke-linecap="round" stroke-linejoin="round"><path d="M10 25l9 9 19-20"/></svg></span><span><b>Learn a little Danish.</b> Even “tak” gets you smiles.</span></li>
@@ -749,6 +770,36 @@
         <div class="q-card rv" style="--i:5"><span class="qm" aria-hidden="true">“</span><p class="prompt">What I wish I’d done sooner</p><p class="q"><span class="edit" contenteditable="true" spellcheck="false" data-edit="quote2">Type your story here</span></p><p class="who">— <span class="edit" contenteditable="true" spellcheck="false" data-edit="quote2-who">Ambassador 2</span></p></div>
       </div>
       <aside class="notes">Go through the five quickly, then each ambassador shares their story from the quote cards. Danes usually make friends through shared activities: student organisations, sports clubs, volunteering, Friday bars. Showing up again and again is the trick.</aside>
+    </section>
+
+    <!-- 05 · Student organisations -->
+    <section class="slide t-dark s-orgs" data-tone="dark" data-part="05|Finding your feet" aria-label="Start your own student organisation">
+      <div class="orgs-copy">
+        <h2 class="headline rv" style="--i:0">Can’t find your crowd? Start one.</h2>
+        <div class="founded rv" style="--i:1">
+          <span class="lbl">That’s what I did</span>
+          <span class="name">CBS AI</span>
+          <p>I founded CBS AI, a student organisation for people curious about AI and business. Now it’s a whole community.</p>
+        </div>
+      </div>
+      <div class="orgs-right">
+        <ul class="cloud">
+          <li class="mine rv" style="--i:2">CBS AI</li>
+          <li class="real rv" style="--i:3">CBS Chess</li>
+          <li class="real rv" style="--i:4">CBS Extreme Sports</li>
+          <li class="real rv" style="--i:5">CBS Vikings</li>
+          <li class="idea rv" style="--i:6">Sports</li>
+          <li class="idea rv" style="--i:7">Basketball</li>
+          <li class="idea rv" style="--i:8">Wine</li>
+          <li class="idea rv" style="--i:9">Beer</li>
+          <li class="idea rv" style="--i:10">Coffee</li>
+          <li class="idea rv" style="--i:11">Hiking</li>
+          <li class="idea rv" style="--i:12">Running</li>
+          <li class="yours rv" style="--i:13">CBS ______ ?</li>
+        </ul>
+        <p class="legend rv" style="--i:14"><span><i class="l-real"></i>Already at CBS</span><span><i class="l-idea"></i>Your idea? Check if it exists, or start it</span></p>
+      </div>
+      <aside class="notes">Join a student organisation, or create one. I created CBS AI, a student organisation for people curious about AI and business. There are already lots of organisations at CBS, like CBS Chess, CBS Extreme Sports and CBS Vikings. But if your thing isn’t there yet, whether it’s basketball, wine, beer, coffee, hiking or running, you can start it yourself. It’s one of the best ways to find your people.</aside>
     </section>
 
     <!-- 05 · Food -->
@@ -816,9 +867,9 @@
         <div class="pick rv" style="--i:4"><div class="top"><span class="n">03</span><span class="vibe">Live jazz</span></div><h3>Det Hvide Lam</h3><p class="where">Inner City · Kultorvet</p><p>Tiny old-school bodega with live jazz. Squeeze in and stay a while.</p></div>
         <div class="pick rv" style="--i:5"><div class="top"><span class="n">04</span><span class="vibe">Hidden gem</span></div><h3>Det Elektriske Hjørne</h3><p class="where">Inner City · Store Regnegade</p><p>Classic café bar. The bar itself was designed by Finn Juhl in 1947.</p></div>
         <div class="pick rv" style="--i:6"><div class="top"><span class="n">05</span><span class="vibe">Bodega</span></div><h3>Farfars Bodega</h3><p class="where">Inner City · Skindergade</p><p>Bodega vibes, football on the screens and a dance floor upstairs.</p></div>
-        <div class="pick rv" style="--i:7"><div class="top"><span class="n">06</span><span class="vibe">Dancing</span></div><h3>Danza</h3><p class="where">Kødbyen</p><p>For when the night isn’t over yet. End it on the dance floor.</p></div>
+        <div class="pick rv" style="--i:7"><div class="top"><span class="n">06</span><span class="vibe">Dancing</span></div><h3>Bodega Danza</h3><p class="where">Kødbyen</p><p>For when the night isn’t over yet. End it on the dance floor.</p></div>
       </div>
-      <aside class="notes">A little bonus: my personal favourites, roughly in the order of a perfect night out. Bouillon on Solbjergvej is a French bistro near Frederiksberg Station, very good and not expensive. ÅBEN is a brewery bar in Kødbyen. Det Hvide Lam at Kultorvet is a tiny bodega with live jazz. Det Elektriske Hjørne on Store Regnegade is a classic café bar whose bar was designed by Finn Juhl for Hotel d’Angleterre in 1947. Farfars Bodega on Skindergade has football and a dance floor upstairs. Danza in Kødbyen is where the night ends. Add a line about why each one is your favourite.</aside>
+      <aside class="notes">A little bonus: my personal favourites, roughly in the order of a perfect night out. Bouillon on Solbjergvej is a French bistro near Frederiksberg Station, very good and not expensive. ÅBEN is a brewery bar in Kødbyen. Det Hvide Lam at Kultorvet is a tiny bodega with live jazz. Det Elektriske Hjørne on Store Regnegade is a classic café bar whose bar was designed by Finn Juhl for Hotel d’Angleterre in 1947. Farfars Bodega on Skindergade has football and a dance floor upstairs. Bodega Danza in Kødbyen is where the night ends. Add a line about why each one is your favourite.</aside>
     </section>
 
     <!-- 05 · Winter -->
