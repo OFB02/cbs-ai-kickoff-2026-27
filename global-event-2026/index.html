@@ -78,9 +78,14 @@
   .lede { font-size: 30px; line-height: 1.45; color: var(--mute); max-width: 1100px; text-wrap: pretty; }
   .t-dark .lede { color: var(--ice); }
   .mono { font-family: var(--mono); }
-  .edit { border-bottom: 2px dashed rgba(200,16,46,.45); outline: none; border-radius: 2px; cursor: text; }
+  .edit { outline: none; border-radius: 2px; }
+  .editing .edit { border-bottom: 2px dashed rgba(200,16,46,.45); cursor: text; }
+  .isa-tip { visibility: hidden; }
+  .editing .isa-tip { visibility: visible; }
+  .avatar { pointer-events: none; }
+  .editing .avatar { pointer-events: auto; }
   .edit:focus { background: rgba(200,16,46,.08); border-bottom-color: var(--red); }
-  .t-dark .edit, .q-card .edit { border-bottom-color: rgba(255,181,71,.55); }
+  .editing .t-dark .edit, .editing .q-card .edit { border-bottom-color: rgba(255,181,71,.55); }
 
   /* ---------- Chrome ---------- */
   .chrome-top {
@@ -200,7 +205,7 @@
   .isa-meta { font-size: 30px; color: var(--mute); line-height: 1.45; }
   .isa-word { margin-top: 10px; align-self: flex-start; white-space: nowrap; background: var(--ink); color: var(--snow); border-radius: 999px; padding: 14px 28px; font-size: 26px; }
   .isa-word b { color: var(--amber); font-weight: 600; }
-  .isa-word .edit { border-bottom-color: rgba(255,181,71,.6); }
+  .editing .isa-word .edit { border-bottom-color: rgba(255,181,71,.6); }
   .isa-quip { font-family: var(--mono); font-size: 18px; color: var(--mute); margin-top: -4px; padding-left: 4px; }
   .isa-tip { font-family: var(--mono); font-size: 18px; color: var(--mute); }
 
@@ -292,7 +297,8 @@
   .chal p { font-size: 27px; line-height: 1.45; color: var(--ice); }
   .story { display: flex; gap: 22px; align-items: center; background: var(--red); border-radius: 24px; padding: 28px 36px; font-size: 28px; }
   .story b { font-family: var(--mono); font-weight: 500; font-size: 18px; letter-spacing: .12em; text-transform: uppercase; white-space: nowrap; }
-  .story .edit { border-bottom-color: rgba(243,245,248,.55); flex: 1; min-width: 0; }
+  .story .edit { flex: 1; min-width: 0; }
+  .editing .story .edit { border-bottom-color: rgba(243,245,248,.55); }
 
   /* ================= Housing ================= */
   .s-housing { display: grid; grid-template-columns: 1fr 640px; gap: 80px; }
@@ -566,7 +572,7 @@
           </div>
         </div>
       </div>
-      <p class="isa-tip rv" style="--i:3">Click any dashed text to type. Click a circle to add your photo. It’s saved in this browser.</p>
+      <p class="isa-tip rv" style="--i:3">Edit mode: click dashed text to type, click a circle to add a photo. Saved in this browser only. Press E to finish.</p>
       <aside class="notes">Each ambassador: 20–30 seconds. Name, where you’re from, what you study, how long you’ve been here, and your one word for Denmark (“bikes”, “rain”, “hyggeligt”, “expensive”…). Fill in the cards and add a photo before the event.</aside>
     </section>
 
@@ -863,7 +869,7 @@
           <h2 class="headline rv" style="--i:0">My picks</h2>
           <p class="sub rv" style="--i:1">From dinner to dancing, in the order of a good night out.</p>
         </div>
-        <p class="picks-by rv" style="--i:1">picked by <span class="edit" contenteditable="true" spellcheck="false" data-edit="picks-by">your name</span></p>
+        <p class="picks-by rv" style="--i:1">picked by <span class="edit" contenteditable="true" spellcheck="false" data-edit="picks-by-v2">Oskar</span></p>
       </div>
       <div class="picks">
         <div class="pick rv" style="--i:2"><div class="top"><span class="n">01</span><span class="vibe">Dinner</span></div><h3>Bouillon</h3><p class="where">Frederiksberg · Solbjergvej 3</p><p>French bistro classics like steak frites and onion soup, without the French prices.</p></div>
@@ -951,7 +957,7 @@
   </main>
 </div>
 <div class="notes-panel" id="notes" hidden></div>
-<div class="hint" id="hint">→ next · ← back · F fullscreen · N speaker notes</div>
+<div class="hint" id="hint">→ next · ← back · F fullscreen · N notes · E edit</div>
 <input type="file" id="photo-input" accept="image/*" hidden>
 
 <script>
@@ -1249,7 +1255,14 @@
     });
   });
 
-  // Editable text, kept in this browser
+  // Editable text, kept in this browser. Off by default; press E to toggle.
+  var editables = stage.querySelectorAll('[data-edit]');
+  function setEdit(on) {
+    stage.classList.toggle('editing', on);
+    editables.forEach(function (el) { el.setAttribute('contenteditable', on ? 'true' : 'false'); });
+    if (!on && document.activeElement && document.activeElement.isContentEditable) document.activeElement.blur();
+  }
+  setEdit(false);
   stage.querySelectorAll('[data-edit]').forEach(function (el) {
     var saved = load('t:' + el.dataset.edit);
     if (saved) el.textContent = saved;
@@ -1302,6 +1315,8 @@
         e.preventDefault(); backward(); break;
       case 'Home': e.preventDefault(); go(0, false); break;
       case 'End': e.preventDefault(); go(total - 1, true); break;
+      case 'e': case 'E':
+        setEdit(!stage.classList.contains('editing')); break;
       case 'n': case 'N':
         notesPanel.hidden = !notesPanel.hidden; renderNotes(); break;
       case 'f': case 'F':
