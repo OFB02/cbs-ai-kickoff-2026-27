@@ -1,0 +1,1129 @@
+<title>Velkommen til Danmark</title>
+<meta name="claude:viewport-fit-sides" content="cover">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,500;12..96,700;12..96,800&family=Instrument+Sans:wght@400;500;600;700&family=DM+Mono:wght@400;500&display=swap">
+<style>
+  /* Layout: a fixed 1920x1080 stage scaled to the window; Dannebrog red is the one loud colour, used for the cover, section wipes and the finale. */
+  :root {
+    --night: #0b1626;
+    --deep: #15243c;
+    --deep-2: #1d3150;
+    --red: #c8102e;
+    --red-deep: #9c0c23;
+    --snow: #f3f5f8;
+    --paper: #fbfcfd;
+    --ink: #0b1626;
+    --mute: #566177;
+    --line: #dbe0e8;
+    --ice: #a9bad3;
+    --amber: #ffb547;
+    --display: "Bricolage Grotesque", "Helvetica Neue", Arial, sans-serif;
+    --body: "Instrument Sans", "Helvetica Neue", Arial, sans-serif;
+    --mono: "DM Mono", "SFMono-Regular", Menlo, Consolas, monospace;
+    color-scheme: dark;
+  }
+  * { box-sizing: border-box; }
+  html, body { height: 100%; }
+  body {
+    margin: 0; background: var(--night); color: var(--ink);
+    font-family: var(--body); overflow: hidden;
+    -webkit-font-smoothing: antialiased;
+    padding-left: max(0px, env(safe-area-inset-left, 0px));
+    padding-right: max(0px, env(safe-area-inset-right, 0px));
+  }
+  h1, h2, h3, p, ul, ol { margin: 0; }
+  ul, ol { padding: 0; list-style: none; }
+  button { font: inherit; color: inherit; }
+
+  /* ---------- Stage ---------- */
+  .viewport { position: fixed; inset: 0; background: var(--night); }
+  .stage {
+    position: absolute; left: 50%; top: 50%;
+    width: 1920px; height: 1080px;
+    transform: translate(-50%, -50%) scale(var(--scale, .5));
+    overflow: hidden; background: var(--snow);
+  }
+  .slide {
+    position: absolute; inset: 0; padding: 150px 120px 120px;
+    opacity: 0; visibility: hidden; transform: translateX(80px);
+    transition: opacity .6s ease, transform .85s cubic-bezier(.2,.7,.2,1), visibility 0s linear .6s;
+  }
+  .slide.is-past { transform: translateX(-80px); }
+  .slide.is-active {
+    opacity: 1; visibility: visible; transform: none;
+    transition: opacity .6s ease, transform .85s cubic-bezier(.2,.7,.2,1), visibility 0s;
+  }
+  .t-dark { background: radial-gradient(1100px 700px at 85% 10%, rgba(200,16,46,.16), transparent 65%), linear-gradient(165deg, var(--deep) 0%, var(--night) 70%); color: var(--snow); }
+  .t-light { background: var(--snow); }
+  .t-white { background: var(--paper); }
+  .t-red { background: var(--red); color: var(--snow); }
+
+  .rv { opacity: 1; }
+  .is-active .rv { animation: rise .8s cubic-bezier(.2,.7,.2,1) both; animation-delay: calc(var(--i, 0) * 90ms + 200ms); }
+  @keyframes rise { from { opacity: 0; transform: translateY(28px); } }
+
+  .frag { opacity: 0; transform: translateY(18px); transition: opacity .45s ease, transform .55s cubic-bezier(.2,.7,.2,1); }
+  .frag.on { opacity: 1; transform: none; }
+
+  /* ---------- Type ---------- */
+  .headline {
+    font-family: var(--display); font-weight: 800;
+    font-size: 88px; line-height: 1; letter-spacing: -0.035em;
+    text-wrap: balance; color: var(--ink);
+  }
+  .t-dark .headline, .t-red .headline { color: var(--snow); }
+  .headline em { font-style: normal; color: var(--red); }
+  .t-dark .headline em { color: #ff5a6e; }
+  .lede { font-size: 30px; line-height: 1.45; color: var(--mute); max-width: 1100px; text-wrap: pretty; }
+  .t-dark .lede { color: var(--ice); }
+  .mono { font-family: var(--mono); }
+  .edit { border-bottom: 2px dashed rgba(200,16,46,.45); outline: none; border-radius: 2px; cursor: text; }
+  .edit:focus { background: rgba(200,16,46,.08); border-bottom-color: var(--red); }
+  .t-dark .edit, .q-card .edit { border-bottom-color: rgba(255,181,71,.55); }
+
+  /* ---------- Chrome ---------- */
+  .chrome-top {
+    position: absolute; left: 120px; right: 120px; top: 56px; height: 48px;
+    display: flex; align-items: center; justify-content: space-between;
+    z-index: 5; pointer-events: none; transition: opacity .5s ease;
+  }
+  .brand { display: flex; align-items: center; gap: 14px; font-size: 20px; font-weight: 600; letter-spacing: .02em; color: var(--ink); }
+  .brand svg { width: 40px; height: 30px; display: block; }
+  .part { font-size: 20px; font-weight: 500; letter-spacing: .02em; color: var(--mute); display: flex; gap: 14px; }
+  .part b { font-family: var(--mono); font-weight: 500; color: var(--red); }
+  .stage[data-tone="dark"] .brand { color: var(--snow); }
+  .stage[data-tone="dark"] .part { color: var(--ice); }
+  .stage[data-tone="dark"] .part b { color: var(--amber); }
+  .stage[data-chrome="off"] .chrome-top { opacity: 0; }
+
+  .chrome-bottom { position: absolute; right: 120px; bottom: 40px; z-index: 6; display: flex; align-items: center; gap: 20px; }
+  .counter { font-family: var(--mono); font-size: 20px; color: var(--mute); }
+  .counter b { color: var(--ink); font-weight: 500; }
+  .stage[data-tone="dark"] .counter, .stage[data-tone="red"] .counter { color: var(--ice); }
+  .stage[data-tone="dark"] .counter b, .stage[data-tone="red"] .counter b { color: var(--snow); }
+  .stage[data-tone="red"] .counter { color: rgba(243,245,248,.75); }
+  .nav-btn {
+    width: 52px; height: 52px; border-radius: 50%;
+    border: 1.5px solid var(--line); background: transparent; color: var(--ink);
+    display: grid; place-items: center; cursor: pointer;
+    transition: background .2s, border-color .2s, color .2s;
+  }
+  .nav-btn:hover:not(:disabled) { background: var(--ink); border-color: var(--ink); color: var(--snow); }
+  .nav-btn:focus-visible { outline: 3px solid var(--amber); outline-offset: 3px; }
+  .nav-btn:disabled { opacity: .3; cursor: default; }
+  .stage[data-tone="dark"] .nav-btn, .stage[data-tone="red"] .nav-btn { border-color: rgba(243,245,248,.35); color: var(--snow); }
+  .stage[data-tone="dark"] .nav-btn:hover:not(:disabled), .stage[data-tone="red"] .nav-btn:hover:not(:disabled) { background: var(--snow); color: var(--ink); border-color: var(--snow); }
+  .nav-btn svg { width: 22px; height: 22px; }
+  .progress { position: absolute; left: 0; right: 0; bottom: 0; height: 6px; background: rgba(200,16,46,.15); z-index: 6; }
+  .progress i { display: block; height: 100%; width: 0; background: var(--red); transition: width .7s cubic-bezier(.2,.7,.2,1); }
+  .stage[data-tone="red"] .progress i { background: var(--snow); }
+  .stage[data-bottom="dark"] .counter { color: var(--ice); }
+  .stage[data-bottom="dark"] .counter b { color: var(--snow); }
+  .stage[data-bottom="dark"] .nav-btn { border-color: rgba(243,245,248,.35); color: var(--snow); }
+  .stage[data-bottom="dark"] .nav-btn:hover:not(:disabled) { background: var(--snow); color: var(--ink); border-color: var(--snow); }
+
+  /* ---------- Section wipe ---------- */
+  .wipe {
+    position: absolute; inset: 0; z-index: 20; pointer-events: none;
+    background: var(--red); color: var(--snow);
+    clip-path: inset(0 0 0 100%);
+    display: flex; flex-direction: column; justify-content: center; padding: 0 160px;
+  }
+  .wipe .w-cross-v { position: absolute; left: 623px; top: 0; width: 207px; height: 100%; background: rgba(243,245,248,.12); }
+  .wipe .w-cross-h { position: absolute; left: 0; top: 463px; width: 100%; height: 154px; background: rgba(243,245,248,.12); }
+  .wipe .w-num { position: relative; font-family: var(--mono); font-size: 34px; letter-spacing: .1em; opacity: .85; }
+  .wipe .w-name { position: relative; font-family: var(--display); font-weight: 800; font-size: 170px; letter-spacing: -0.04em; line-height: 1; }
+  .wipe.run { animation: wipe 1.25s cubic-bezier(.7,0,.25,1) both; }
+  .wipe.run .w-num, .wipe.run .w-name { animation: wipe-text 1.25s ease both; }
+  @keyframes wipe {
+    0% { clip-path: inset(0 0 0 100%); }
+    36% { clip-path: inset(0 0 0 0); }
+    64% { clip-path: inset(0 0 0 0); }
+    100% { clip-path: inset(0 100% 0 0); }
+  }
+  @keyframes wipe-text {
+    0%, 22% { opacity: 0; transform: translateX(60px); }
+    40%, 62% { opacity: 1; transform: none; }
+    85%, 100% { opacity: 0; transform: translateX(-60px); }
+  }
+
+  /* ---------- Notes + hint ---------- */
+  .notes-panel {
+    position: fixed; left: 50%; bottom: max(16px, env(safe-area-inset-bottom, 0px)); transform: translateX(-50%);
+    width: min(900px, calc(100% - 32px)); max-height: 40vh; overflow: auto;
+    background: rgba(11,22,38,.94); color: var(--snow); border: 1px solid rgba(169,186,211,.3);
+    border-radius: 14px; padding: 18px 22px; font-size: 16px; line-height: 1.55; z-index: 30;
+    box-shadow: 0 20px 60px rgba(0,0,0,.4);
+  }
+  .notes-panel b { display: block; font-family: var(--mono); font-weight: 500; font-size: 12px; letter-spacing: .12em; text-transform: uppercase; color: var(--amber); margin-bottom: 6px; }
+  .hint {
+    position: fixed; left: 50%; top: max(16px, env(safe-area-inset-top, 0px)); transform: translateX(-50%);
+    background: rgba(11,22,38,.9); color: var(--snow); font-family: var(--mono); font-size: 13px;
+    padding: 10px 16px; border-radius: 999px; z-index: 30; transition: opacity .6s ease; white-space: nowrap;
+  }
+  .hint.gone { opacity: 0; }
+  aside.notes { display: none; }
+
+  /* ================= Cover ================= */
+  .s-cover { padding: 0; overflow: hidden; }
+  .flag-bar { position: absolute; background: var(--snow); }
+  .flag-bar.v { left: 623px; top: 0; width: 207px; height: 1080px; transform-origin: top; }
+  .flag-bar.h { left: 0; top: 463px; width: 1920px; height: 154px; transform-origin: left; }
+  .is-active .flag-bar.v { animation: grow-y 1.1s cubic-bezier(.7,0,.2,1) .15s both; }
+  .is-active .flag-bar.h { animation: grow-x 1.2s cubic-bezier(.7,0,.2,1) .45s both; }
+  @keyframes grow-y { from { transform: scaleY(0); } }
+  @keyframes grow-x { from { transform: scaleX(0); } }
+  .sheen { position: absolute; inset: 0; background: linear-gradient(110deg, transparent 35%, rgba(255,255,255,.13) 48%, transparent 60%); background-size: 260% 100%; animation: sheen 7s ease-in-out infinite; mix-blend-mode: soft-light; }
+  @keyframes sheen { 0% { background-position: 120% 0; } 100% { background-position: -120% 0; } }
+  .cover-meta { position: absolute; left: 120px; top: 110px; width: 440px; font-family: var(--mono); font-size: 24px; line-height: 1.6; letter-spacing: .04em; }
+  .cover-meta b { font-weight: 500; display: block; font-size: 15px; letter-spacing: .18em; text-transform: uppercase; opacity: .8; margin-bottom: 8px; }
+  .cover-isa { position: absolute; left: 900px; top: 110px; width: 900px; font-size: 26px; line-height: 1.5; max-width: 760px; }
+  .cover-title { position: absolute; left: 900px; top: 672px; right: 110px; display: flex; flex-direction: column; gap: 24px; }
+  .cover-title h1 { font-family: var(--display); font-weight: 800; font-size: 112px; line-height: .95; letter-spacing: -0.045em; }
+  .cover-title p { font-size: 28px; line-height: 1.4; max-width: 820px; }
+
+  /* ================= ISAs ================= */
+  .s-isas { display: flex; flex-direction: column; gap: 56px; }
+  .isa-grid { flex: 1; display: grid; grid-template-columns: 1fr 1fr; gap: 40px; }
+  .isa { background: var(--paper); border: 1.5px solid var(--line); border-radius: 30px; padding: 56px; display: grid; grid-template-columns: 260px 1fr; gap: 48px; align-items: center; }
+  .avatar {
+    width: 260px; height: 260px; border-radius: 50%; border: 0; cursor: pointer; position: relative; overflow: hidden;
+    background: var(--deep) center / cover no-repeat; color: var(--ice);
+    display: grid; place-items: center; font-family: var(--mono); font-size: 18px; letter-spacing: .06em;
+    box-shadow: 0 0 0 8px var(--snow), 0 0 0 10px var(--red);
+  }
+  .avatar.has-photo span { display: none; }
+  .avatar:focus-visible { outline: 3px solid var(--amber); outline-offset: 12px; }
+  .isa-body { display: flex; flex-direction: column; gap: 16px; min-width: 0; }
+  .isa-name { font-family: var(--display); font-weight: 800; font-size: 64px; letter-spacing: -0.03em; line-height: 1.05; }
+  .isa-meta { font-size: 30px; color: var(--mute); line-height: 1.45; }
+  .isa-word { margin-top: 10px; align-self: flex-start; background: var(--ink); color: var(--snow); border-radius: 999px; padding: 14px 28px; font-size: 26px; }
+  .isa-word b { color: var(--amber); font-weight: 600; }
+  .isa-word .edit { border-bottom-color: rgba(255,181,71,.6); }
+  .isa-tip { font-family: var(--mono); font-size: 18px; color: var(--mute); }
+
+  /* ================= Icebreaker ================= */
+  .s-ice { display: flex; flex-direction: column; gap: 56px; }
+  .hands { display: flex; flex-direction: column; gap: 22px; }
+  .hands li { display: grid; grid-template-columns: 76px 1fr; gap: 28px; align-items: center; font-size: 42px; line-height: 1.2; font-weight: 500; }
+  .hands .ic { width: 76px; height: 76px; border-radius: 22px; background: rgba(243,245,248,.08); border: 1px solid rgba(169,186,211,.25); display: grid; place-items: center; color: var(--amber); }
+  .hands .ic svg { width: 42px; height: 42px; }
+  .hands small { font-size: 26px; color: var(--ice); font-weight: 400; margin-left: 12px; }
+
+  /* ================= Agenda ================= */
+  .s-agenda { display: flex; flex-direction: column; gap: 60px; }
+  .agenda { display: grid; grid-template-columns: repeat(5, 1fr); gap: 22px; }
+  .agenda button {
+    text-align: left; background: var(--paper); border: 1.5px solid var(--line); border-radius: 26px; padding: 34px 30px 36px;
+    display: flex; flex-direction: column; gap: 16px; cursor: pointer; min-height: 400px;
+    transition: transform .25s ease, border-color .25s, box-shadow .25s;
+  }
+  .agenda button:hover { transform: translateY(-6px); border-color: var(--red); box-shadow: 0 18px 40px rgba(11,22,38,.08); }
+  .agenda button:focus-visible { outline: 3px solid var(--red); outline-offset: 4px; }
+  .agenda .num { font-family: var(--mono); font-size: 22px; color: var(--red); }
+  .agenda .ttl { font-family: var(--display); font-weight: 800; font-size: 40px; line-height: 1.05; letter-spacing: -0.02em; color: var(--ink); }
+  .agenda .dsc { font-size: 22px; line-height: 1.45; color: var(--mute); margin-top: auto; }
+  .agenda .min { font-family: var(--mono); font-size: 18px; color: var(--mute); }
+
+  /* ================= Danes ================= */
+  .s-danes { display: flex; flex-direction: column; gap: 52px; }
+  .codes { display: grid; grid-template-columns: 1fr 1fr; gap: 28px; }
+  .code { background: var(--snow); border-radius: 28px; padding: 40px 44px; display: flex; flex-direction: column; gap: 14px; }
+  .code h3 { font-family: var(--display); font-weight: 800; font-size: 44px; letter-spacing: -0.025em; }
+  .code p { font-size: 25px; line-height: 1.45; color: var(--mute); }
+  .code .tr { margin-top: 6px; font-family: var(--mono); font-size: 22px; color: var(--red); line-height: 1.4; padding-top: 16px; border-top: 1.5px dashed var(--line); }
+
+  /* ================= Hygge ================= */
+  .s-hygge { display: grid; grid-template-columns: 840px 1fr; gap: 80px; align-items: center; }
+  .sky { position: relative; height: 790px; border-radius: 34px; overflow: hidden; }
+  .sky .layer { position: absolute; inset: 0; transition: opacity 1.6s ease; }
+  .sky .day { background: linear-gradient(180deg, #7fa7d1 0%, #c9d6e4 55%, #f2d3a2 100%); }
+  .sky .dusk { background: linear-gradient(180deg, #08111f 0%, #16243e 60%, #2c2a44 100%); opacity: 0; }
+  .sky.is-dusk .dusk { opacity: 1; }
+  .sky svg.arc { position: absolute; inset: 0; width: 100%; height: 100%; }
+  .sky .ground { position: absolute; left: 0; right: 0; bottom: 0; height: 230px; background: #0e1a2c; }
+  .sky .clock { position: absolute; left: 44px; top: 40px; font-family: var(--mono); font-size: 92px; letter-spacing: -0.02em; color: var(--ink); transition: color 1.2s ease; font-variant-numeric: tabular-nums; }
+  .sky .clock-sub { position: absolute; left: 48px; top: 150px; font-family: var(--mono); font-size: 20px; letter-spacing: .08em; text-transform: uppercase; color: var(--ink); opacity: .7; transition: color 1.2s ease; }
+  .sky.is-dusk .clock, .sky.is-dusk .clock-sub { color: var(--amber); }
+  .candles { position: absolute; left: 0; right: 0; bottom: 62px; display: flex; justify-content: center; align-items: flex-end; gap: 46px; opacity: 0; transform: translateY(20px); transition: opacity 1.2s ease .3s, transform 1.2s ease .3s; }
+  .sky.is-dusk .candles { opacity: 1; transform: none; }
+  .candle { position: relative; width: 58px; background: linear-gradient(90deg, #efe6d6, #fbf6ec 50%, #e2d6c1); border-radius: 8px 8px 4px 4px; }
+  .candle::before { content: ""; position: absolute; left: 50%; top: -14px; width: 3px; height: 16px; margin-left: -1.5px; background: #3a2c22; border-radius: 2px; }
+  .flame { position: absolute; left: 50%; top: -66px; width: 26px; height: 52px; margin-left: -13px; border-radius: 50% 50% 50% 50% / 62% 62% 38% 38%; background: radial-gradient(ellipse at 50% 72%, #fff6d9 0 22%, #ffd36b 40%, #ff9d2e 70%, rgba(255,120,40,0) 75%); transform-origin: 50% 90%; animation: flicker 1.6s ease-in-out infinite; }
+  .candle:nth-child(2) .flame { animation-duration: 1.9s; animation-delay: -.6s; }
+  .candle:nth-child(3) .flame { animation-duration: 1.4s; animation-delay: -.3s; }
+  .glow { position: absolute; left: 50%; top: -140px; width: 240px; height: 240px; margin-left: -120px; border-radius: 50%; background: radial-gradient(circle, rgba(255,181,71,.35), rgba(255,181,71,0) 65%); animation: glow 2.2s ease-in-out infinite; pointer-events: none; }
+  @keyframes flicker { 0%,100% { transform: scale(1) rotate(-1deg); } 25% { transform: scale(1.06,.95) rotate(2deg); } 50% { transform: scale(.95,1.05) rotate(-2deg); } 75% { transform: scale(1.03,.98) rotate(1deg); } }
+  @keyframes glow { 0%,100% { opacity: .85; } 50% { opacity: 1; } }
+  .hygge-copy { display: flex; flex-direction: column; gap: 32px; min-width: 0; }
+  .hygge-copy .lede { font-size: 28px; }
+  .stat-row { display: flex; gap: 40px; }
+  .stat b { display: block; font-family: var(--mono); font-weight: 500; font-size: 56px; color: var(--amber); letter-spacing: -0.02em; }
+  .stat span { font-size: 22px; color: var(--ice); }
+  .tips { display: flex; flex-wrap: wrap; gap: 14px; }
+  .tips li { font-size: 22px; padding: 12px 22px; border-radius: 999px; background: rgba(243,245,248,.08); border: 1px solid rgba(169,186,211,.25); }
+
+  /* ================= Phrases ================= */
+  .s-phrases { display: flex; flex-direction: column; gap: 22px; }
+  .s-phrases .lede { font-size: 26px; }
+  .flips { margin-top: 26px; display: grid; grid-template-columns: repeat(4, 1fr); gap: 22px; }
+  .flip { display: block; width: 100%; height: 270px; perspective: 1400px; cursor: pointer; border: 0; padding: 0; background: none; text-align: left; }
+  .flip:focus-visible { outline: 3px solid var(--red); outline-offset: 4px; border-radius: 26px; }
+  .flip-inner { display: block; position: relative; height: 100%; transform-style: preserve-3d; transition: transform .8s cubic-bezier(.3,1.3,.5,1); transition-delay: 0s; }
+  .flip.flipped .flip-inner, .flips.on .flip-inner { transform: rotateY(180deg); }
+  .flips.on .flip-inner { transition-delay: calc(var(--i, 0) * 90ms); }
+  .face { position: absolute; inset: 0; border-radius: 26px; padding: 30px 32px; backface-visibility: hidden; -webkit-backface-visibility: hidden; display: flex; flex-direction: column; }
+  .front { background: var(--paper); border: 1.5px solid var(--line); justify-content: space-between; }
+  .front .word { display: block; font-family: var(--display); font-weight: 800; font-size: 54px; letter-spacing: -0.03em; line-height: 1; color: var(--ink); }
+  .front .tap { font-family: var(--mono); font-size: 16px; color: var(--mute); letter-spacing: .08em; text-transform: uppercase; }
+  .back { background: var(--red); color: var(--snow); transform: rotateY(180deg); gap: 12px; }
+  .back .mean { display: block; font-family: var(--display); font-weight: 800; font-size: 36px; letter-spacing: -0.02em; line-height: 1.05; }
+  .back .use { display: block; font-size: 21px; line-height: 1.4; opacity: .92; }
+  .flip:nth-child(even) .back { background: var(--ink); }
+
+  /* ================= Challenges ================= */
+  .s-chal { display: flex; flex-direction: column; gap: 56px; }
+  .chal-row { display: grid; grid-template-columns: repeat(4, 1fr); gap: 24px; }
+  .chal { border-radius: 28px; padding: 48px 40px 52px; background: rgba(243,245,248,.06); border: 1px solid rgba(169,186,211,.22); display: flex; flex-direction: column; gap: 18px; }
+  .chal svg { width: 80px; height: 80px; color: var(--amber); }
+  .chal h3 { font-family: var(--display); font-weight: 800; font-size: 44px; letter-spacing: -0.02em; }
+  .chal p { font-size: 27px; line-height: 1.45; color: var(--ice); }
+  .story { display: flex; gap: 22px; align-items: center; background: var(--red); border-radius: 24px; padding: 28px 36px; font-size: 28px; }
+  .story b { font-family: var(--mono); font-weight: 500; font-size: 18px; letter-spacing: .12em; text-transform: uppercase; white-space: nowrap; }
+  .story .edit { border-bottom-color: rgba(243,245,248,.55); flex: 1; min-width: 0; }
+
+  /* ================= Housing ================= */
+  .s-housing { display: grid; grid-template-columns: 1fr 640px; gap: 80px; }
+  .h-left { display: flex; flex-direction: column; gap: 34px; min-width: 0; }
+  .sites { display: flex; flex-direction: column; }
+  .sites li { display: grid; grid-template-columns: 330px 1fr; gap: 24px; align-items: baseline; padding: 15px 0; border-top: 1.5px solid var(--line); font-size: 24px; color: var(--mute); line-height: 1.4; }
+  .sites li:last-child { border-bottom: 1.5px solid var(--line); }
+  .sites .dom { font-family: var(--mono); font-size: 25px; color: var(--ink); }
+  .sites .dom em { font-style: normal; color: var(--red); }
+  .rules { display: flex; gap: 16px; flex-wrap: wrap; }
+  .rules li { background: var(--ink); color: var(--snow); border-radius: 999px; padding: 12px 22px; font-size: 21px; }
+  .rules li b { color: var(--amber); font-weight: 600; }
+  .listing-wrap { position: relative; align-self: center; }
+  .listing-label { font-family: var(--mono); font-size: 17px; letter-spacing: .1em; text-transform: uppercase; color: var(--mute); margin-bottom: 14px; }
+  .listing { position: relative; background: var(--paper); border-radius: 30px; box-shadow: 0 30px 70px rgba(11,22,38,.14); overflow: visible; border: 1.5px solid var(--line); }
+  .listing .photo { height: 250px; border-radius: 28px 28px 0 0; background: linear-gradient(135deg, #d8dfe9, #eef1f5); position: relative; overflow: hidden; }
+  .listing .photo svg { position: absolute; left: 50%; top: 50%; width: 220px; transform: translate(-50%, -50%); color: #b3bccb; }
+  .listing .body { padding: 28px 34px 34px; display: flex; flex-direction: column; gap: 14px; }
+  .listing .ttl { font-family: var(--display); font-weight: 800; font-size: 36px; letter-spacing: -0.02em; }
+  .listing .price { font-family: var(--mono); font-size: 30px; color: var(--ink); }
+  .listing .msg { background: var(--snow); border-radius: 20px 20px 20px 6px; padding: 18px 22px; font-size: 22px; line-height: 1.45; color: var(--ink); }
+  .listing .msg small { display: block; font-family: var(--mono); font-size: 15px; color: var(--mute); margin-bottom: 6px; }
+  .red-flag { position: absolute; display: flex; align-items: center; gap: 10px; background: var(--red); color: var(--snow); font-size: 19px; font-weight: 600; padding: 10px 18px 10px 14px; border-radius: 999px; box-shadow: 0 10px 24px rgba(200,16,46,.3); white-space: nowrap; }
+  .red-flag svg { width: 20px; height: 20px; }
+  .rf-1 { right: -60px; top: 370px; }
+  .rf-2 { left: -60px; top: 440px; }
+  .rf-3 { right: -40px; bottom: -26px; }
+  .stamp { position: absolute; left: 50%; top: 120px; margin-left: -190px; width: 380px; text-align: center; font-family: var(--display); font-weight: 800; font-size: 120px; letter-spacing: .02em; color: var(--red); border: 10px solid var(--red); border-radius: 18px; background: rgba(251,252,253,.82); transform: rotate(-14deg) scale(1); }
+  .stamp.frag { transform: rotate(-14deg) scale(2.2); transition: opacity .25s ease, transform .45s cubic-bezier(.5,1.6,.5,1); }
+  .stamp.frag.on { transform: rotate(-14deg) scale(1); }
+
+  /* ================= Paperwork ================= */
+  .s-paper { display: flex; flex-direction: column; gap: 70px; }
+  .steps { position: relative; display: grid; grid-template-columns: repeat(5, 1fr); gap: 28px; }
+  .track { position: absolute; left: 10%; right: 10%; top: 49px; height: 4px; background: var(--line); border-radius: 2px; }
+  .track i { position: absolute; inset: 0; background: var(--red); transform-origin: left; border-radius: 2px; }
+  .is-active .track i { animation: grow-x 2.2s cubic-bezier(.5,0,.2,1) .5s both; }
+  .step { position: relative; display: flex; flex-direction: column; align-items: center; text-align: center; gap: 18px; }
+  .node { width: 102px; height: 102px; border-radius: 50%; background: var(--paper); border: 4px solid var(--red); display: grid; place-items: center; font-family: var(--mono); font-size: 34px; color: var(--red); }
+  .is-active .node { animation: node-on .5s ease both; animation-delay: calc(var(--i) * 420ms + 600ms); }
+  @keyframes node-on { from { background: var(--paper); color: var(--red); transform: scale(.85); } to { background: var(--red); color: var(--snow); transform: scale(1); } }
+  .step h3 { font-family: var(--display); font-weight: 800; font-size: 36px; letter-spacing: -0.02em; }
+  .step p { font-size: 22px; line-height: 1.45; color: var(--mute); max-width: 290px; }
+  .work { display: flex; gap: 30px; align-items: center; background: var(--ink); color: var(--snow); border-radius: 26px; padding: 30px 40px; }
+  .work .big { font-family: var(--mono); font-size: 64px; color: var(--amber); white-space: nowrap; }
+  .work p { font-size: 25px; line-height: 1.45; color: #d8e0ec; }
+  .work p b { color: var(--snow); }
+
+  /* ================= Surprises ================= */
+  .s-surp { display: flex; flex-direction: column; gap: 52px; }
+  .surp-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 24px; }
+  .surp { position: relative; border-radius: 28px; padding: 36px 38px 38px; background: rgba(243,245,248,.06); border: 1px solid rgba(169,186,211,.22); display: flex; flex-direction: column; gap: 14px; overflow: hidden; transition: transform .3s ease, background .3s ease; }
+  .surp:hover { transform: translateY(-6px) rotate(-.6deg); background: rgba(243,245,248,.1); }
+  .surp .tag { font-family: var(--mono); font-size: 17px; letter-spacing: .1em; text-transform: uppercase; color: var(--amber); }
+  .surp h3 { font-family: var(--display); font-weight: 800; font-size: 42px; letter-spacing: -0.025em; line-height: 1.05; }
+  .surp p { font-size: 23px; line-height: 1.45; color: var(--ice); }
+
+  /* ================= Bikes ================= */
+  .s-bikes { display: flex; flex-direction: column; gap: 46px; }
+  .bike-rules { display: grid; grid-template-columns: repeat(3, 1fr); gap: 26px; }
+  .rule { background: var(--paper); border: 1.5px solid var(--line); border-radius: 26px; padding: 40px 40px; display: grid; grid-template-columns: 72px 1fr; gap: 26px; align-items: start; }
+  .rule svg { width: 72px; height: 72px; color: var(--red); }
+  .rule h3 { font-family: var(--display); font-weight: 800; font-size: 38px; letter-spacing: -0.02em; line-height: 1.1; }
+  .rule p { margin-top: 10px; font-size: 24px; line-height: 1.45; color: var(--mute); }
+  .lane { position: absolute; left: 0; right: 0; bottom: 0; height: 200px; background: #2a3445; overflow: hidden; }
+  .lane::before { content: ""; position: absolute; left: 0; right: 0; top: 0; height: 10px; background: #c9d1dd; }
+  .lane .stripe { position: absolute; left: 0; right: 0; top: 96px; height: 6px; background: repeating-linear-gradient(90deg, rgba(243,245,248,.7) 0 70px, transparent 70px 140px); }
+  .lane .sym { position: absolute; left: 140px; top: 120px; width: 70px; color: rgba(243,245,248,.35); }
+  .rider { position: absolute; left: -200px; color: var(--snow); animation: ride linear infinite; }
+  .rider svg { display: block; }
+  .rider.r1 { top: 24px; width: 150px; animation-duration: 9s; animation-delay: -2s; }
+  .rider.r2 { top: 34px; width: 130px; animation-duration: 12s; animation-delay: -7s; color: var(--amber); }
+  .rider.r3 { top: 100px; width: 160px; animation-duration: 7.5s; animation-delay: -4.5s; color: #ff8a98; }
+  .rider.r4 { top: 108px; width: 140px; animation-duration: 10.5s; animation-delay: -9s; }
+  @keyframes ride { from { transform: translateX(0); } to { transform: translateX(2300px); } }
+  .rider .wheel { transform-box: fill-box; transform-origin: center; animation: spin .6s linear infinite; }
+  @keyframes spin { to { transform: rotate(360deg); } }
+
+  /* ================= Footing ================= */
+  .s-footing { display: grid; grid-template-columns: 1fr 720px; gap: 80px; align-items: start; }
+  .f-left { display: flex; flex-direction: column; gap: 46px; min-width: 0; }
+  .helped { display: flex; flex-direction: column; gap: 26px; }
+  .helped li { display: grid; grid-template-columns: 52px 1fr; gap: 22px; align-items: start; font-size: 27px; line-height: 1.4; color: var(--mute); }
+  .helped li b { color: var(--ink); font-weight: 700; }
+  .helped .ck { width: 52px; height: 52px; border-radius: 50%; background: var(--red); color: var(--snow); display: grid; place-items: center; }
+  .helped .ck svg { width: 28px; height: 28px; }
+  .quotes { display: flex; flex-direction: column; gap: 26px; padding-top: 20px; }
+  .q-card { background: var(--ink); color: var(--snow); border-radius: 30px; padding: 46px 48px 40px; display: flex; flex-direction: column; gap: 22px; position: relative; }
+  .q-card .qm { position: absolute; right: 36px; top: 4px; font-family: var(--display); font-weight: 800; font-size: 170px; line-height: 1; color: var(--red); }
+  .q-card .q { position: relative; font-family: var(--display); font-weight: 500; font-size: 36px; line-height: 1.25; letter-spacing: -0.015em; }
+  .q-card .who { font-family: var(--mono); font-size: 19px; color: var(--amber); }
+  .q-card .prompt { font-family: var(--mono); font-size: 16px; letter-spacing: .08em; text-transform: uppercase; color: var(--ice); }
+
+  /* ================= Food ================= */
+  .s-food { display: grid; grid-template-columns: 600px 1fr; gap: 110px; align-items: center; }
+  .receipt { position: relative; background: #fffdf8; color: #1c1c1c; font-family: var(--mono); padding: 46px 46px 70px; transform: rotate(-3deg); box-shadow: 0 30px 60px rgba(11,22,38,.18); }
+  .is-active .receipt { animation: print 1.1s cubic-bezier(.2,.7,.2,1) .25s both; }
+  @keyframes print { from { clip-path: inset(0 0 100% 0); transform: rotate(-3deg) translateY(-40px); } to { clip-path: inset(0 0 -40px 0); transform: rotate(-3deg); } }
+  .receipt::after { content: ""; position: absolute; left: 0; right: 0; bottom: -18px; height: 18px; background: linear-gradient(135deg, #fffdf8 50%, transparent 50%) 0 0 / 24px 18px repeat-x, linear-gradient(225deg, #fffdf8 50%, transparent 50%) 0 0 / 24px 18px repeat-x; }
+  .receipt .shop { text-align: center; font-size: 46px; font-weight: 500; letter-spacing: .06em; }
+  .receipt .addr { text-align: center; font-size: 19px; color: #555; margin-top: 6px; }
+  .receipt hr { border: 0; border-top: 2px dashed #bbb; margin: 26px 0; }
+  .receipt .ln { display: flex; justify-content: space-between; gap: 16px; font-size: 24px; line-height: 1.9; }
+  .receipt .ln span:last-child { white-space: nowrap; }
+  .receipt .tot { font-size: 30px; font-weight: 500; }
+  .receipt .tot span:last-child { color: var(--red); }
+  .receipt .bye { text-align: center; font-size: 22px; letter-spacing: .14em; margin-top: 10px; }
+  .receipt .fine { text-align: center; font-size: 15px; color: #777; margin-top: 14px; }
+  .food-copy { display: flex; flex-direction: column; gap: 40px; min-width: 0; }
+  .eats { display: flex; flex-direction: column; gap: 0; }
+  .eats li { display: grid; grid-template-columns: 290px 1fr; gap: 26px; padding: 22px 0; border-top: 1.5px solid var(--line); align-items: baseline; }
+  .eats li:last-child { border-bottom: 1.5px solid var(--line); }
+  .eats b { font-family: var(--display); font-weight: 800; font-size: 32px; letter-spacing: -0.02em; }
+  .eats span { font-size: 24px; color: var(--mute); line-height: 1.45; }
+
+  /* ================= Hangout ================= */
+  .s-hang { display: flex; flex-direction: column; gap: 56px; }
+  .hang-cols { display: grid; grid-template-columns: repeat(3, 1fr); gap: 28px; }
+  .hang { border-radius: 28px; padding: 38px 38px 40px; background: rgba(243,245,248,.06); border: 1px solid rgba(169,186,211,.22); display: flex; flex-direction: column; gap: 26px; }
+  .hang h3 { display: flex; align-items: center; gap: 14px; font-family: var(--mono); font-weight: 500; font-size: 20px; letter-spacing: .14em; text-transform: uppercase; color: var(--amber); }
+  .hang h3 svg { width: 26px; height: 26px; }
+  .spot { display: flex; flex-direction: column; gap: 6px; padding-top: 22px; border-top: 1px solid rgba(169,186,211,.22); }
+  .spot b { font-family: var(--display); font-weight: 800; font-size: 34px; letter-spacing: -0.02em; }
+  .spot span { font-size: 22px; line-height: 1.45; color: var(--ice); }
+
+  /* ================= Winter ================= */
+  .s-winter { background: linear-gradient(180deg, #08111f 0%, #13223a 100%); color: var(--snow); display: grid; grid-template-columns: 620px 1fr; gap: 100px; }
+  .s-winter canvas { position: absolute; inset: 0; width: 100%; height: 100%; pointer-events: none; }
+  .w-left { position: relative; display: flex; flex-direction: column; gap: 40px; }
+  .countdown { background: var(--red); border-radius: 30px; padding: 36px 40px; display: flex; flex-direction: column; gap: 6px; }
+  .countdown .lbl { font-family: var(--mono); font-size: 19px; letter-spacing: .12em; text-transform: uppercase; opacity: .85; }
+  .countdown .n { font-family: var(--display); font-weight: 800; font-size: 150px; line-height: .95; letter-spacing: -0.04em; font-variant-numeric: tabular-nums; }
+  .countdown .sub { font-size: 22px; line-height: 1.45; }
+  .timeline { position: relative; display: flex; flex-direction: column; }
+  .timeline li { display: grid; grid-template-columns: 210px 1fr; gap: 30px; padding: 24px 0; border-top: 1px solid rgba(169,186,211,.25); align-items: baseline; }
+  .timeline li:last-child { border-bottom: 1px solid rgba(169,186,211,.25); }
+  .timeline .d { font-family: var(--mono); font-size: 26px; color: var(--amber); }
+  .timeline b { display: block; font-family: var(--display); font-weight: 800; font-size: 34px; letter-spacing: -0.02em; margin-bottom: 4px; }
+  .timeline span { font-size: 22px; line-height: 1.45; color: var(--ice); }
+
+  /* ================= Questions ================= */
+  .s-q { padding: 0; overflow: hidden; }
+  .s-q .flag-bar { background: rgba(243,245,248,.1); }
+  .s-q canvas { position: absolute; inset: 0; width: 100%; height: 100%; pointer-events: none; }
+  .q-wrap { position: absolute; left: 160px; right: 160px; top: 0; bottom: 0; display: flex; flex-direction: column; justify-content: center; gap: 36px; }
+  .q-big { font-family: var(--display); font-weight: 800; font-size: 250px; letter-spacing: -0.05em; line-height: .9; display: flex; }
+  .q-big span { display: inline-block; }
+  .is-active .q-big span { animation: wave 2.6s ease-in-out infinite; animation-delay: calc(var(--i) * 80ms + 600ms); }
+  @keyframes wave { 0%, 60%, 100% { transform: none; } 30% { transform: translateY(-26px); } }
+  .q-sub { font-size: 40px; font-weight: 600; }
+  .chips { display: flex; flex-wrap: wrap; gap: 16px; max-width: 1500px; }
+  .chips li { font-size: 25px; padding: 14px 26px; border-radius: 999px; background: rgba(11,22,38,.22); border: 1px solid rgba(243,245,248,.3); }
+  .q-foot { font-family: var(--mono); font-size: 22px; opacity: .85; }
+
+  @media (prefers-reduced-motion: reduce) {
+    .slide, .slide.is-active { transition: opacity .2s linear, visibility 0s; transform: none !important; }
+    .is-active .rv, .is-active .flag-bar, .is-active .track i, .is-active .node, .is-active .receipt, .is-active .q-big span, .sheen, .rider, .rider .wheel, .flame, .glow { animation: none !important; }
+    .is-active .node { background: var(--red); color: var(--snow); }
+    .wipe { display: none; }
+    .frag, .flip-inner, .sky .layer, .candles { transition: none !important; }
+  }
+</style>
+
+<div class="viewport">
+  <main class="stage" id="stage" aria-live="polite">
+
+    <div class="chrome-top" aria-hidden="true">
+      <div class="brand">
+        <svg viewBox="0 0 37 28"><rect width="37" height="28" fill="#c8102e"/><rect x="12" width="4" height="28" fill="#f3f5f8"/><rect y="12" width="37" height="4" fill="#f3f5f8"/></svg>
+        <span>ISA · Global Event 2026</span>
+      </div>
+      <span class="part" id="part"></span>
+    </div>
+
+    <!-- 01 · Cover -->
+    <section class="slide t-red s-cover" data-tone="red" data-chrome="off" data-part="01|Welcome" aria-label="Velkommen til Danmark">
+      <div class="flag-bar v"></div>
+      <div class="flag-bar h"></div>
+      <div class="sheen" aria-hidden="true"></div>
+      <p class="cover-meta rv" style="--i:4"><b>Global Event</b>Wed 28 October<br>16:30–19:00 · Station</p>
+      <p class="cover-isa rv" style="--i:5">Danish culture &amp; adjusting to Denmark, told by two International Student Ambassadors who were in your seat not long ago.</p>
+      <div class="cover-title">
+        <h1 class="rv" style="--i:6">Velkommen til Danmark</h1>
+        <p class="rv" style="--i:7">Welcome to Denmark. Here’s what we wish someone had told us.</p>
+      </div>
+      <aside class="notes">Welcome everyone! “Velkommen til Danmark” means “Welcome to Denmark”. We have about 20 minutes: what’s helpful to know about Danes, the challenges, the surprises, how we found our footing, and then your questions. Keep it relaxed, this is students talking to students.</aside>
+    </section>
+
+    <!-- 01 · ISAs -->
+    <section class="slide t-light s-isas" data-tone="light" data-part="01|Welcome" aria-label="Who are we">
+      <h2 class="headline rv" style="--i:0">Hej! Who are we?</h2>
+      <div class="isa-grid">
+        <div class="isa rv" style="--i:1">
+          <button class="avatar" type="button" data-photo="isa1" aria-label="Add a photo of ambassador 1"><span>+ add photo</span></button>
+          <div class="isa-body">
+            <p class="isa-name"><span class="edit" contenteditable="true" spellcheck="false" data-edit="isa1-name">Your name</span></p>
+            <p class="isa-meta">From <span class="edit" contenteditable="true" spellcheck="false" data-edit="isa1-from">country</span><br><span class="edit" contenteditable="true" spellcheck="false" data-edit="isa1-prog">Programme, semester</span></p>
+            <p class="isa-word">Denmark in one word: <b class="edit" contenteditable="true" spellcheck="false" data-edit="isa1-word">______</b></p>
+          </div>
+        </div>
+        <div class="isa rv" style="--i:2">
+          <button class="avatar" type="button" data-photo="isa2" aria-label="Add a photo of ambassador 2"><span>+ add photo</span></button>
+          <div class="isa-body">
+            <p class="isa-name"><span class="edit" contenteditable="true" spellcheck="false" data-edit="isa2-name">Your name</span></p>
+            <p class="isa-meta">From <span class="edit" contenteditable="true" spellcheck="false" data-edit="isa2-from">country</span><br><span class="edit" contenteditable="true" spellcheck="false" data-edit="isa2-prog">Programme, semester</span></p>
+            <p class="isa-word">Denmark in one word: <b class="edit" contenteditable="true" spellcheck="false" data-edit="isa2-word">______</b></p>
+          </div>
+        </div>
+      </div>
+      <p class="isa-tip rv" style="--i:3">Click any dashed text to type. Click a circle to add your photo. It’s saved in this browser.</p>
+      <aside class="notes">Each ambassador: 20–30 seconds. Name, where you’re from, what you study, how long you’ve been here, and your one word for Denmark (“bikes”, “rain”, “hyggeligt”, “expensive”…). Fill in the cards and add a photo before the event.</aside>
+    </section>
+
+    <!-- 01 · Icebreaker -->
+    <section class="slide t-dark s-ice" data-tone="dark" data-part="01|Welcome" aria-label="Raise your hand">
+      <h2 class="headline rv" style="--i:0">Raise your hand if you’ve already…</h2>
+      <ul class="hands">
+        <li class="frag"><span class="ic"><svg viewBox="0 0 48 48" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="32" r="8"/><circle cx="37" cy="32" r="8"/><path d="M11 32l8-14h12l6 14M19 18l6 14h-14M29 12h5"/></svg></span><span>…been rung at by an angry cyclist</span></li>
+        <li class="frag"><span class="ic"><svg viewBox="0 0 48 48" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><path d="M6 24a18 18 0 0 1 36 0z"/><path d="M24 24v14a4 4 0 0 1-8 0M24 6v0"/></svg></span><span>…lost a fight with the wind over your umbrella</span></li>
+        <li class="frag"><span class="ic"><svg viewBox="0 0 48 48" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><rect x="8" y="14" width="32" height="24" rx="6"/><path d="M16 22h.01M24 26h.01M32 22h.01M20 31h.01M29 31h.01"/></svg></span><span>…eaten rugbrød and formed an opinion about it</span></li>
+        <li class="frag"><span class="ic"><svg viewBox="0 0 48 48" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><path d="M30 6a18 18 0 1 0 12 26A14 14 0 0 1 30 6z"/></svg></span><span>…seen it get dark before 17:00 <small>(the clocks went back on Sunday)</small></span></li>
+        <li class="frag"><span class="ic"><svg viewBox="0 0 48 48" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><rect x="8" y="8" width="32" height="28" rx="5"/><path d="M8 24h32M14 36v4M34 36v4M15 30h.01M33 30h.01"/></svg></span><span>…ridden a full bus where nobody said a single word</span></li>
+      </ul>
+      <aside class="notes">Press → to reveal one line at a time and let people raise hands. Laugh along. The point: everybody goes through the same things. The clocks went back on Sunday 25 October, so the evenings just got a lot darker.</aside>
+    </section>
+
+    <!-- 01 · Agenda -->
+    <section class="slide t-light s-agenda" data-tone="light" data-part="01|Welcome" aria-label="Twenty minutes, five stops">
+      <h2 class="headline rv" style="--i:0">Twenty minutes, five stops</h2>
+      <nav class="agenda" aria-label="Agenda">
+        <button type="button" class="rv" style="--i:1" data-target="s-danes"><span class="num">02</span><span class="ttl">Helpful to know</span><span class="dsc">How Danes think, talk and hygge</span></button>
+        <button type="button" class="rv" style="--i:2" data-target="s-chal"><span class="num">03</span><span class="ttl">The hard parts</span><span class="dsc">Housing, paperwork, darkness, friends</span></button>
+        <button type="button" class="rv" style="--i:3" data-target="s-surp"><span class="num">04</span><span class="ttl">Surprises</span><span class="dsc">The “wait, what?!” moments</span></button>
+        <button type="button" class="rv" style="--i:4" data-target="s-footing"><span class="num">05</span><span class="ttl">Finding your feet</span><span class="dsc">What helped us, plus food, bars and winter</span></button>
+        <button type="button" class="rv" style="--i:5" data-target="s-q"><span class="num">06</span><span class="ttl">Your questions</span><span class="dsc">Anything. Seriously, anything.</span></button>
+      </nav>
+      <aside class="notes">Quick overview. You can click a card to jump to that part.</aside>
+    </section>
+
+    <!-- 02 · Decoding the Danes -->
+    <section class="slide t-white s-danes" id="s-danes" data-tone="light" data-part="02|Helpful to know" aria-label="Decoding the Danes">
+      <h2 class="headline rv" style="--i:0">Decoding the <em>Danes</em></h2>
+      <div class="codes">
+        <div class="code rv" style="--i:1"><h3>Direct, not rude</h3><p>Danes say what they mean, especially in group work. A “no” is information, not an insult.</p><p class="tr">“I don’t think that works.” = I don’t think that works.</p></div>
+        <div class="code rv" style="--i:2"><h3>Flat hierarchy</h3><p>First names for everyone, professors included. You’re expected to speak up and disagree.</p><p class="tr">“Hej Lars!” → said to your professor</p></div>
+        <div class="code rv" style="--i:3"><h3>On time means on time</h3><p>Lectures, group meetings and dinner invites start exactly when they say.</p><p class="tr">“See you at 16:30” → be there 16:29</p></div>
+        <div class="code rv" style="--i:4"><h3>Janteloven</h3><p>The unwritten rule: don’t think you’re better than anyone. Modesty is cool. Bragging is not.</p><p class="tr">“It went okay” = I got a 12</p></div>
+      </div>
+      <aside class="notes">Directness: feedback like “I don’t think that works” is about the work, not about you. Flat hierarchy: first names for teachers, everyone’s opinion counts. Punctuality: being late to a group meeting gets noticed. Janteloven: don’t show off about money or grades. 12 is the top grade on the Danish scale, so “it went okay” can mean you aced it. Ambassadors: add one personal example.</aside>
+    </section>
+
+    <!-- 02 · Hygge -->
+    <section class="slide t-dark s-hygge" data-tone="dark" data-part="02|Helpful to know" aria-label="Hygge is a survival strategy">
+      <div class="sky rv" style="--i:0" id="sky">
+        <div class="layer day"></div>
+        <div class="layer dusk"></div>
+        <svg class="arc" viewBox="0 0 840 790" fill="none" aria-hidden="true">
+          <path d="M80 560 Q420 180 760 560" stroke="rgba(11,22,38,.25)" stroke-width="3" stroke-dasharray="4 12"/>
+          <circle id="sun" cx="80" cy="560" r="38" fill="#ffcf5a"/>
+        </svg>
+        <div class="ground"></div>
+        <p class="clock" id="clock">08:37</p>
+        <p class="clock-sub">21 December · Copenhagen</p>
+        <div class="candles" aria-hidden="true">
+          <div class="candle" style="height:120px"><div class="glow"></div><div class="flame"></div></div>
+          <div class="candle" style="height:170px"><div class="glow"></div><div class="flame"></div></div>
+          <div class="candle" style="height:95px"><div class="glow"></div><div class="flame"></div></div>
+        </div>
+      </div>
+      <div class="hygge-copy">
+        <h2 class="headline rv" style="--i:1">Hygge is a survival strategy</h2>
+        <p class="lede rv" style="--i:2">Candles, blankets, coffee, good people. When it’s dark at four, Danes don’t hide. They get cosy together. If someone invites you for hygge, say yes.</p>
+        <div class="stat-row rv" style="--i:3">
+          <div class="stat"><b>15:38</b><span>sunset on 21 Dec</span></div>
+          <div class="stat"><b>~7 h</b><span>of daylight that day</span></div>
+        </div>
+        <ul class="tips rv" style="--i:4">
+          <li>Buy candles</li><li>Take vitamin D</li><li>Rain jacket &gt; umbrella</li><li>Get outside at lunch</li>
+        </ul>
+      </div>
+      <aside class="notes">Watch the sun: on the shortest day it rises around 08:37 and sets around 15:38. Many internationals find November–February the hardest months. Hygge is how Danes cope: small cosy gatherings, candles, coffee and cake. Tips: get outside in daylight, take vitamin D, stay active, accept invitations. A good rain jacket beats an umbrella because the wind destroys umbrellas.</aside>
+    </section>
+
+    <!-- 02 · Phrases -->
+    <section class="slide t-light s-phrases" data-tone="light" data-part="02|Helpful to know" aria-label="Your Danish survival kit">
+      <h2 class="headline rv" style="--i:0">Your Danish survival kit</h2>
+      <p class="lede rv" style="--i:1">Eight words that get you surprisingly far. Say them out loud with us.</p>
+      <div class="flips step">
+        <button type="button" class="flip rv" style="--i:2"><span class="flip-inner"><span class="face front"><span class="word">Hej</span><span class="tap">Tap to flip</span></span><span class="face back"><span class="mean">Hi!</span><span class="use">And “hej hej” means bye. Confusing, we know.</span></span></span></button>
+        <button type="button" class="flip rv" style="--i:3"><span class="flip-inner"><span class="face front"><span class="word">Tak</span><span class="tap">Tap to flip</span></span><span class="face back"><span class="mean">Thanks</span><span class="use">For everything. Literally everything.</span></span></span></button>
+        <button type="button" class="flip rv" style="--i:4"><span class="flip-inner"><span class="face front"><span class="word">Undskyld</span><span class="tap">Tap to flip</span></span><span class="face back"><span class="mean">Sorry / excuse me</span><span class="use">Squeezing past on a full bus.</span></span></span></button>
+        <button type="button" class="flip rv" style="--i:5"><span class="flip-inner"><span class="face front"><span class="word">Skål!</span><span class="tap">Tap to flip</span></span><span class="face back"><span class="mean">Cheers!</span><span class="use">Look every single person in the eyes.</span></span></span></button>
+        <button type="button" class="flip rv" style="--i:6"><span class="flip-inner"><span class="face front"><span class="word">Tak for mad</span><span class="tap">Tap to flip</span></span><span class="face back"><span class="mean">Thanks for the food</span><span class="use">Always, after dinner at someone’s home.</span></span></span></button>
+        <button type="button" class="flip rv" style="--i:7"><span class="flip-inner"><span class="face front"><span class="word">Hyggeligt</span><span class="tap">Tap to flip</span></span><span class="face back"><span class="mean">Cosy, nice</span><span class="use">Any good time with good people.</span></span></span></button>
+        <button type="button" class="flip rv" style="--i:8"><span class="flip-inner"><span class="face front"><span class="word">Nå…</span><span class="tap">Tap to flip</span></span><span class="face back"><span class="mean">Well… / Oh… / So…</span><span class="use">Means everything. It’s all in the tone.</span></span></span></button>
+        <button type="button" class="flip rv" style="--i:9"><span class="flip-inner"><span class="face front"><span class="word">Pyt</span><span class="tap">Tap to flip</span></span><span class="face back"><span class="mean">Oh well, never mind</span><span class="use">The Danish way to let small things go.</span></span></span></button>
+      </div>
+      <aside class="notes">Say each word and let the room guess the meaning before you flip. Press → to flip all cards, or click single cards. Skål: when Danes toast, you look each person in the eyes. “Tak for mad” after dinner at someone’s home is a must. “Pyt” is what you say when the bus leaves without you.</aside>
+    </section>
+
+    <!-- 03 · Challenges -->
+    <section class="slide t-dark s-chal" id="s-chal" data-tone="dark" data-part="03|The hard parts" aria-label="The things nobody warns you about">
+      <h2 class="headline rv" style="--i:0">The things nobody warns you about</h2>
+      <div class="chal-row">
+        <div class="chal rv" style="--i:1"><svg viewBox="0 0 48 48" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M6 22L24 8l18 14v20H6z"/><path d="M19 42V30h10v12"/></svg><h3>Housing</h3><p>Expensive, competitive and full of scams.</p></div>
+        <div class="chal rv" style="--i:2"><svg viewBox="0 0 48 48" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M12 4h18l8 8v32H12z"/><path d="M30 4v8h8M18 22h14M18 30h14M18 38h8"/></svg><h3>Paperwork</h3><p>CPR, MitID, Digital Post. A whole new alphabet.</p></div>
+        <div class="chal rv" style="--i:3"><svg viewBox="0 0 48 48" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M14 30a9 9 0 0 1 2-18 12 12 0 0 1 22 4 8 8 0 0 1-2 14z"/><path d="M16 36l-2 6M25 36l-2 6M34 36l-2 6"/></svg><h3>The dark</h3><p>Grey, wet and short days from November to February.</p></div>
+        <div class="chal rv" style="--i:4"><svg viewBox="0 0 48 48" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><circle cx="17" cy="16" r="6"/><circle cx="33" cy="16" r="6"/><path d="M5 40c0-10 24-10 24 0M21 40c0-10 24-10 24 0"/></svg><h3>Danish friends</h3><p>Friendly but reserved. The first step is on you.</p></div>
+      </div>
+      <p class="story rv" style="--i:5"><b>Our biggest challenge</b><span class="edit" contenteditable="true" spellcheck="false" data-edit="challenge">Type a one-line version of your story here</span></p>
+      <aside class="notes">The four big ones. On Danish friends: many Danes have had the same friend group since school, so they aren’t cold, just busy. You meet them through shared activities (student organisations, sports, Friday bars) more than through small talk. Then each ambassador tells their own biggest challenge in about 30 seconds.</aside>
+    </section>
+
+    <!-- 03 · Housing -->
+    <section class="slide t-light s-housing" data-tone="light" data-part="03|The hard parts" aria-label="The housing hunt">
+      <div class="h-left">
+        <h2 class="headline rv" style="--i:0">The housing hunt</h2>
+        <ul class="sites rv" style="--i:1">
+          <li><span class="dom">s<em>.dk</em></span><span>Dorms and student flats around Copenhagen</span></li>
+          <li><span class="dom">kollegierneskontor<em>.dk</em></span><span>More dorms, one application</span></li>
+          <li><span class="dom">findbolig<em>.nu</em></span><span>Waiting lists. Sign up now, even if you have a place</span></li>
+          <li><span class="dom">boligportal<em>.dk</em></span><span>Private rooms and flats (paid membership)</span></li>
+          <li><span class="dom">Facebook groups</span><span>Fast, but scam central</span></li>
+        </ul>
+        <ul class="rules rv" style="--i:2">
+          <li>Dorm room ≈ <b>3,000–5,500 kr</b>/month</li>
+          <li>Deposit: max <b>3 months’</b> rent, by law</li>
+        </ul>
+      </div>
+      <div class="listing-wrap rv" style="--i:3">
+        <p class="listing-label">Spot the scam · example listing</p>
+        <div class="listing">
+          <div class="photo"><svg viewBox="0 0 120 80" fill="none" stroke="currentColor" stroke-width="3" stroke-linejoin="round"><rect x="20" y="10" width="80" height="60" rx="4"/><path d="M60 10v60M20 40h80"/></svg></div>
+          <div class="body">
+            <p class="ttl">Bright room in Nørrebro</p>
+            <p class="price">2.500 kr/md · furnished · available now</p>
+            <p class="msg"><small>Message from “landlord”</small>I’m working in London right now. Transfer the deposit today and I’ll post you the keys!</p>
+          </div>
+          <p class="red-flag rf-1 frag"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M5 2h2v20H5zM8 3h11l-3 5 3 5H8z"/></svg>Way below market price</p>
+          <p class="red-flag rf-2 frag"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M5 2h2v20H5zM8 3h11l-3 5 3 5H8z"/></svg>Landlord “abroad”, no viewing</p>
+          <p class="red-flag rf-3 frag"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M5 2h2v20H5zM8 3h11l-3 5 3 5H8z"/></svg>Money before contract</p>
+          <p class="stamp frag">SCAM</p>
+        </div>
+      </div>
+      <aside class="notes">Housing is the number-one stress. S.dk and Kollegiernes Kontor are the two big portals for dorms (kollegier). findbolig.nu runs waiting lists, so sign up early because seniority counts. BoligPortal costs money but has many private listings. Facebook groups are fast but full of scams. Press → to reveal the red flags one by one, then the stamp. Never pay before you’ve seen the place and signed a contract. Danish law caps the deposit at 3 months’ rent (plus up to 3 months prepaid rent). Ambassadors: tell how you found your place.</aside>
+    </section>
+
+    <!-- 03 · Paperwork -->
+    <section class="slide t-white s-paper" data-tone="light" data-part="03|The hard parts" aria-label="Adulting in Denmark in five steps">
+      <h2 class="headline rv" style="--i:0">Adulting in Denmark, in five steps</h2>
+      <div class="steps">
+        <div class="track"><i></i></div>
+        <div class="step" style="--i:0"><span class="node">1</span><h3>CPR number</h3><p>Your Danish ID number. It unlocks everything else.</p></div>
+        <div class="step" style="--i:1"><span class="node">2</span><h3>Yellow card</h3><p>Your health card, with your own doctor on it.</p></div>
+        <div class="step" style="--i:2"><span class="node">3</span><h3>MitID</h3><p>Your login for banks, CBS and the state.</p></div>
+        <div class="step" style="--i:3"><span class="node">4</span><h3>NemKonto</h3><p>A Danish bank account linked to your CPR.</p></div>
+        <div class="step" style="--i:4"><span class="node">5</span><h3>Digital Post</h3><p>Official letters land here. Check it often.</p></div>
+      </div>
+      <div class="work rv" style="--i:2">
+        <span class="big">20 h</span>
+        <p><b>Non-EU students:</b> your permit normally lets you work 20 hours a week during the semester and full-time in June, July and August. Always check your own permit on nyidanmark.dk.</p>
+      </div>
+      <aside class="notes">Order matters: the CPR number (International House or your municipality) comes first. With it you get the yellow health card with your own GP, and healthcare is free. MitID is the digital ID for almost everything. NemKonto is the account the state and employers pay into. Digital Post is where official letters arrive; missing them can mean fines. Non-EU work rules: 20 hours a week in the semester, full-time in the summer months. Working more can cost you your residence permit.</aside>
+    </section>
+
+    <!-- 04 · Surprises -->
+    <section class="slide t-dark s-surp" id="s-surp" data-tone="dark" data-part="04|Surprises" aria-label="Wait, what?!">
+      <h2 class="headline rv" style="--i:0">Wait… <em>what?!</em></h2>
+      <div class="surp-grid">
+        <div class="surp rv" style="--i:1"><span class="tag">Campus life</span><h3>Beer at uni</h3><p>Friday bars on campus are a proper tradition. Yes, at school.</p></div>
+        <div class="surp rv" style="--i:2"><span class="tag">Birthdays</span><h3>Flags on everything</h3><p>On cakes, in trees, at the airport. It’s about celebrating, not politics.</p></div>
+        <div class="surp rv" style="--i:3"><span class="tag">Free money</span><h3>Pant</h3><p>Return cans and bottles at the supermarket and get 1–3 kr back for each.</p></div>
+        <div class="surp rv" style="--i:4"><span class="tag">Parenting</span><h3>Babies nap outside</h3><p>In prams outside cafés, even in winter. Totally normal here.</p></div>
+        <div class="surp rv" style="--i:5"><span class="tag">Swimming pools</span><h3>Naked showers</h3><p>You shower without your swimsuit before you swim. Everyone does.</p></div>
+        <div class="surp rv" style="--i:6"><span class="tag">January</span><h3>Winter swimming</h3><p>People jump into the harbour in January. Then straight into a sauna.</p></div>
+      </div>
+      <aside class="notes">Ask: which one surprised you most? Pant: the label on cans and bottles shows the deposit (A = 1 kr, B = 1.50 kr, C = 3 kr); return them in the machines at the supermarket. Ambassadors: add your own biggest surprise.</aside>
+    </section>
+
+    <!-- 04 · Bikes -->
+    <section class="slide t-light s-bikes" data-tone="light" data-bottom="dark" data-part="04|Surprises" aria-label="Bike like a Dane">
+      <h2 class="headline rv" style="--i:0">Bike like a Dane</h2>
+      <div class="bike-rules">
+        <div class="rule rv" style="--i:1"><svg viewBox="0 0 48 48" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M18 24V8a3 3 0 0 1 6 0v12M24 20V6a3 3 0 0 1 6 0v14M30 20V9a3 3 0 0 1 6 0v17c0 10-6 16-14 16-6 0-9-3-12-8l-4-7a3 3 0 0 1 5-3l3 4"/></svg><div><h3>Hand up</h3><p>Means you’re about to stop.</p></div></div>
+        <div class="rule rv" style="--i:2"><svg viewBox="0 0 48 48" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M4 24h30M26 14l10 10-10 10"/><path d="M44 10v28"/></svg><div><h3>Arm out</h3><p>Point left or right before you turn.</p></div></div>
+        <div class="rule rv" style="--i:3"><svg viewBox="0 0 48 48" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M18 30a10 10 0 1 1 12 0v6H18z"/><path d="M19 42h10M24 4v3M8 12l2 2M40 12l-2 2"/></svg><div><h3>Lights on</h3><p>After dark, or the police will fine you.</p></div></div>
+        <div class="rule rv" style="--i:4"><svg viewBox="0 0 48 48" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M14 4v40M34 4v40" stroke-dasharray="4 6"/><path d="M28 30l6 6 6-6M34 36V14"/></svg><div><h3>Slow? Keep right</h3><p>Fast riders pass on the left.</p></div></div>
+        <div class="rule rv" style="--i:5"><svg viewBox="0 0 48 48" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><rect x="10" y="22" width="28" height="20" rx="4"/><path d="M16 22v-6a8 8 0 0 1 16 0v6M24 30v4"/></svg><div><h3>Lock it. Always.</h3><p>Even for two minutes.</p></div></div>
+        <div class="rule rv" style="--i:6"><svg viewBox="0 0 48 48" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M6 10h6l5 22h20l5-16H14"/><circle cx="19" cy="40" r="3"/><circle cx="35" cy="40" r="3"/></svg><div><h3>Buy used</h3><p>DBA.dk, Facebook Marketplace, or rent from Swapfiets.</p></div></div>
+      </div>
+      <div class="lane" aria-hidden="true">
+        <div class="stripe"></div>
+        <svg class="sym" viewBox="0 0 120 80" fill="none" stroke="currentColor" stroke-width="5"><circle cx="25" cy="55" r="18"/><circle cx="95" cy="55" r="18"/><path d="M25 55l25-30h30l15 30M50 25l10 30H25M75 12h12"/></svg>
+        <div class="rider r1"><svg viewBox="0 0 120 90" fill="none" stroke="currentColor" stroke-width="5" stroke-linecap="round" stroke-linejoin="round"><circle class="wheel" cx="24" cy="66" r="18" stroke-dasharray="10 6"/><circle class="wheel" cx="96" cy="66" r="18" stroke-dasharray="10 6"/><path d="M24 66l24-28h30l18 28M48 38l12 28H24M78 38l-4-12h12"/><path d="M56 34l12-18M68 16l12 12"/><circle cx="68" cy="8" r="7" fill="currentColor"/></svg></div>
+        <div class="rider r2"><svg viewBox="0 0 120 90" fill="none" stroke="currentColor" stroke-width="5" stroke-linecap="round" stroke-linejoin="round"><circle class="wheel" cx="24" cy="66" r="18" stroke-dasharray="10 6"/><circle class="wheel" cx="96" cy="66" r="18" stroke-dasharray="10 6"/><path d="M24 66l24-28h30l18 28M48 38l12 28H24M78 38l-4-12h12"/><path d="M56 34l12-18M68 16l12 12"/><circle cx="68" cy="8" r="7" fill="currentColor"/></svg></div>
+        <div class="rider r3"><svg viewBox="0 0 120 90" fill="none" stroke="currentColor" stroke-width="5" stroke-linecap="round" stroke-linejoin="round"><circle class="wheel" cx="24" cy="66" r="18" stroke-dasharray="10 6"/><circle class="wheel" cx="96" cy="66" r="18" stroke-dasharray="10 6"/><path d="M24 66l24-28h30l18 28M48 38l12 28H24M78 38l-4-12h12"/><path d="M56 34l12-18M68 16l12 12"/><circle cx="68" cy="8" r="7" fill="currentColor"/></svg></div>
+        <div class="rider r4"><svg viewBox="0 0 120 90" fill="none" stroke="currentColor" stroke-width="5" stroke-linecap="round" stroke-linejoin="round"><circle class="wheel" cx="24" cy="66" r="18" stroke-dasharray="10 6"/><circle class="wheel" cx="96" cy="66" r="18" stroke-dasharray="10 6"/><path d="M24 66l24-28h30l18 28M48 38l12 28H24M78 38l-4-12h12"/><path d="M56 34l12-18M68 16l12 12"/><circle cx="68" cy="8" r="7" fill="currentColor"/></svg></div>
+      </div>
+      <aside class="notes">Biking is how Copenhagen moves, and Danish cyclists are fast and strict. Hand up = stopping, arm out = turning. Lights after dark are required and the police do give fines. Slow riders keep right. Never stop suddenly in the bike lane. Bike theft is common, so always lock it. Second-hand: DBA.dk or Facebook Marketplace. Swapfiets is a monthly bike subscription if you want zero hassle.</aside>
+    </section>
+
+    <!-- 05 · Footing -->
+    <section class="slide t-white s-footing" id="s-footing" data-tone="light" data-part="05|Finding your feet" aria-label="What actually helped us">
+      <div class="f-left">
+        <h2 class="headline rv" style="--i:0">What actually helped us</h2>
+        <ul class="helped">
+          <li class="rv" style="--i:1"><span class="ck"><svg viewBox="0 0 48 48" fill="none" stroke="currentColor" stroke-width="5" stroke-linecap="round" stroke-linejoin="round"><path d="M10 25l9 9 19-20"/></svg></span><span><b>Join a student organisation.</b> The fastest way to Danish friends.</span></li>
+          <li class="rv" style="--i:2"><span class="ck"><svg viewBox="0 0 48 48" fill="none" stroke="currentColor" stroke-width="5" stroke-linecap="round" stroke-linejoin="round"><path d="M10 25l9 9 19-20"/></svg></span><span><b>Go to Friday bars.</b> Same faces every week turn into friends.</span></li>
+          <li class="rv" style="--i:3"><span class="ck"><svg viewBox="0 0 48 48" fill="none" stroke="currentColor" stroke-width="5" stroke-linecap="round" stroke-linejoin="round"><path d="M10 25l9 9 19-20"/></svg></span><span><b>Say yes.</b> To dinners, study groups and random invites.</span></li>
+          <li class="rv" style="--i:4"><span class="ck"><svg viewBox="0 0 48 48" fill="none" stroke="currentColor" stroke-width="5" stroke-linecap="round" stroke-linejoin="round"><path d="M10 25l9 9 19-20"/></svg></span><span><b>Learn a little Danish.</b> Even “tak” gets you smiles.</span></li>
+          <li class="rv" style="--i:5"><span class="ck"><svg viewBox="0 0 48 48" fill="none" stroke="currentColor" stroke-width="5" stroke-linecap="round" stroke-linejoin="round"><path d="M10 25l9 9 19-20"/></svg></span><span><b>Build a routine.</b> A sport, a café, a weekly call home.</span></li>
+        </ul>
+      </div>
+      <div class="quotes">
+        <div class="q-card rv" style="--i:3"><span class="qm" aria-hidden="true">“</span><p class="prompt">When it started to feel like home</p><p class="q"><span class="edit" contenteditable="true" spellcheck="false" data-edit="quote1">Type your story here</span></p><p class="who">— <span class="edit" contenteditable="true" spellcheck="false" data-edit="quote1-who">Ambassador 1</span></p></div>
+        <div class="q-card rv" style="--i:5"><span class="qm" aria-hidden="true">“</span><p class="prompt">What I wish I’d done sooner</p><p class="q"><span class="edit" contenteditable="true" spellcheck="false" data-edit="quote2">Type your story here</span></p><p class="who">— <span class="edit" contenteditable="true" spellcheck="false" data-edit="quote2-who">Ambassador 2</span></p></div>
+      </div>
+      <aside class="notes">Go through the five quickly, then each ambassador shares their story from the quote cards. Danes usually make friends through shared activities: student organisations, sports clubs, volunteering, Friday bars. Showing up again and again is the trick.</aside>
+    </section>
+
+    <!-- 05 · Food -->
+    <section class="slide t-light s-food" data-tone="light" data-part="05|Finding your feet" aria-label="Eating well on a student budget">
+      <div class="receipt" aria-label="Receipt from Mio Pizza">
+        <p class="shop">MIO PIZZA</p>
+        <p class="addr">Falkoner Allé 17 · Frederiksberg</p>
+        <hr>
+        <p class="ln"><span>1 × Pizza</span><span>49–59 kr</span></p>
+        <p class="ln"><span>Wait time</span><span>~2 min</span></p>
+        <p class="ln"><span>Delivery</span><span>nej</span></p>
+        <p class="ln"><span>From CBS</span><span>short walk</span></p>
+        <hr>
+        <p class="ln tot"><span>HAPPINESS</span><span>100%</span></p>
+        <p class="bye">TAK FOR BESØGET</p>
+        <p class="fine">price as last reported · may have changed</p>
+      </div>
+      <div class="food-copy">
+        <h2 class="headline rv" style="--i:0">Eating well on a student budget</h2>
+        <ul class="eats rv" style="--i:1">
+          <li><b>Mio Pizza</b><span>Stone-oven pizza right by CBS. The queue moves fast.</span></li>
+          <li><b>Netto, Lidl, Rema</b><span>The cheap supermarkets. Hunt the yellow discount stickers.</span></li>
+          <li><b>Too Good To Go</b><span>App with surprise bags of leftover food from bakeries and cafés.</span></li>
+          <li><b>Kanelsnegl</b><span>Danish cinnamon roll. Your new personality.</span></li>
+        </ul>
+      </div>
+      <aside class="notes">Mio Pizza on Falkoner Allé 17, a short walk from Solbjerg Plads, is a CBS favourite: simple stone-oven pizzas around 49–59 kr (last reported price), ready in a couple of minutes, no delivery. Groceries: Netto, Lidl and Rema 1000 are the budget chains. Too Good To Go sells leftover food cheaply at the end of the day. Ambassadors: add your own favourite cheap spot.</aside>
+    </section>
+
+    <!-- 05 · Hang out -->
+    <section class="slide t-dark s-hang" data-tone="dark" data-part="05|Finding your feet" aria-label="Where to hang out">
+      <h2 class="headline rv" style="--i:0">Where to hang out</h2>
+      <div class="hang-cols">
+        <div class="hang rv" style="--i:1">
+          <h3><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linejoin="round"><path d="M12 22s7-7 7-12a7 7 0 0 0-14 0c0 5 7 12 7 12z"/><circle cx="12" cy="10" r="2.5"/></svg>Bars</h3>
+          <div class="spot"><b>Café Nexus</b><span>CBS’s own Friday bar at Solbjerg Plads.</span></div>
+          <div class="spot"><b>Bodegas</b><span>Old-school Danish pubs with cheap beer and zero pretence.</span></div>
+        </div>
+        <div class="hang rv" style="--i:2">
+          <h3><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linejoin="round"><path d="M12 22s7-7 7-12a7 7 0 0 0-14 0c0 5 7 12 7 12z"/><circle cx="12" cy="10" r="2.5"/></svg>Cafés &amp; study spots</h3>
+          <div class="spot"><b>Studenterhuset</b><span>Student-run café and bar in the city centre, with events.</span></div>
+          <div class="spot"><b>The Black Diamond</b><span>The Royal Library. Study with a harbour view.</span></div>
+        </div>
+        <div class="hang rv" style="--i:3">
+          <h3><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linejoin="round"><path d="M12 22s7-7 7-12a7 7 0 0 0-14 0c0 5 7 12 7 12z"/><circle cx="12" cy="10" r="2.5"/></svg>Free &amp; fun</h3>
+          <div class="spot"><b>Bike the Lakes</b><span>Søerne loop, best at sunset (so around 15:30).</span></div>
+          <div class="spot"><b>Harbour sauna</b><span>Sweat, then a cold dip. Very Danish. Very awake.</span></div>
+        </div>
+      </div>
+      <aside class="notes">Café Nexus at Solbjerg Plads is CBS’s student bar with Friday bars; many study programmes run their own Friday bars too. Bodegas are traditional Danish pubs. Studenterhuset is a student-run café and bar with concerts and language cafés. The Black Diamond is a great study spot on the harbour. Also: Frederiksberg Have right next to CBS. Ambassadors: add your favourite place.</aside>
+    </section>
+
+    <!-- 05 · Winter -->
+    <section class="slide s-winter" data-tone="dark" data-part="05|Finding your feet" aria-label="Your first Danish winter">
+      <canvas id="snow" width="1920" height="1080" aria-hidden="true"></canvas>
+      <div class="w-left">
+        <h2 class="headline rv" style="--i:0">Your first Danish winter</h2>
+        <div class="countdown rv" style="--i:1">
+          <span class="lbl">J-Dag is in</span>
+          <span class="n" id="jdays">9 days</span>
+          <span class="sub">Friday 6 November, 20:59. The Christmas beer arrives.</span>
+        </div>
+      </div>
+      <ul class="timeline">
+        <li class="rv" style="--i:2"><span class="d">6 Nov</span><span><b>J-Dag</b><span>Santa hats, blue tinsel and free Christmas beer in the bars.</span></span></li>
+        <li class="rv" style="--i:3"><span class="d">Mid-Nov</span><span><b>Tivoli Christmas</b><span>Lights, gløgg and æbleskiver in the city centre.</span></span></li>
+        <li class="rv" style="--i:4"><span class="d">December</span><span><b>Julefrokost</b><span>The “Christmas lunch” that somehow lasts all night.</span></span></li>
+        <li class="rv" style="--i:5"><span class="d">24 Dec</span><span><b>Christmas Eve</b><span>The big day. Danes hold hands and dance around the tree.</span></span></li>
+        <li class="rv" style="--i:6"><span class="d">31 Dec</span><span><b>Nytår</b><span>Fireworks everywhere. Jump off a chair at midnight.</span></span></li>
+      </ul>
+      <aside class="notes">Something to look forward to in the dark months. J-Dag is the first Friday of November, this year Friday 6 November: Tuborg’s Christmas beer is released at 20:59 and bars get very busy. Tivoli opens its Christmas season around mid-November. If classmates invite you to a julefrokost, go! Danes celebrate Christmas on the evening of the 24th. On New Year’s Eve people watch the King’s speech, eat kransekage, and jump into the new year from a chair. Not going home for Christmas? Ask around, many people invite others in.</aside>
+    </section>
+
+    <!-- 06 · Questions -->
+    <section class="slide t-red s-q" id="s-q" data-tone="red" data-chrome="off" data-part="06|Your questions" aria-label="Questions">
+      <div class="flag-bar v"></div>
+      <div class="flag-bar h"></div>
+      <canvas id="confetti" width="1920" height="1080" aria-hidden="true"></canvas>
+      <div class="q-wrap">
+        <p class="q-big" aria-label="Spørgsmål?"><span style="--i:0">S</span><span style="--i:1">p</span><span style="--i:2">ø</span><span style="--i:3">r</span><span style="--i:4">g</span><span style="--i:5">s</span><span style="--i:6">m</span><span style="--i:7">å</span><span style="--i:8">l</span><span style="--i:9">?</span></p>
+        <p class="q-sub rv" style="--i:2">Questions? Ask us anything. No question is too small.</p>
+        <ul class="chips rv" style="--i:3">
+          <li>Where do I buy a cheap bike?</li>
+          <li>How did you make Danish friends?</li>
+          <li>Best place to study?</li>
+          <li>How do exams work here?</li>
+          <li>What do you wish you’d known?</li>
+        </ul>
+        <p class="q-foot rv" style="--i:4">Next up: quiz, games and a Danish dinner. Velbekomme!</p>
+      </div>
+      <aside class="notes">Open the floor. If it’s quiet, pick one of the example questions and answer it yourselves to get things going. End by thanking everyone and pointing them to the quiz, games and the Danish dinner. “Velbekomme” is what Danes say when serving food, roughly “enjoy your meal”.</aside>
+    </section>
+
+    <div class="wipe" id="wipe" aria-hidden="true"><div class="w-cross-v"></div><div class="w-cross-h"></div><p class="w-num" id="wipe-num"></p><p class="w-name" id="wipe-name"></p></div>
+
+    <div class="chrome-bottom">
+      <span class="counter" id="counter"></span>
+      <button class="nav-btn" id="prev" type="button" aria-label="Previous slide"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M15 6l-6 6 6 6"/></svg></button>
+      <button class="nav-btn" id="next" type="button" aria-label="Next slide"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 6l6 6-6 6"/></svg></button>
+    </div>
+    <div class="progress"><i id="bar"></i></div>
+  </main>
+</div>
+<div class="notes-panel" id="notes" hidden></div>
+<div class="hint" id="hint">→ next · ← back · F fullscreen · N speaker notes</div>
+<input type="file" id="photo-input" accept="image/*" hidden>
+
+<script>
+(function () {
+  var stage = document.getElementById('stage');
+  var slides = Array.prototype.slice.call(stage.querySelectorAll('.slide'));
+  var counter = document.getElementById('counter');
+  var part = document.getElementById('part');
+  var bar = document.getElementById('bar');
+  var prev = document.getElementById('prev');
+  var next = document.getElementById('next');
+  var wipe = document.getElementById('wipe');
+  var notesPanel = document.getElementById('notes');
+  var total = slides.length;
+  var current = -1;
+  var busy = false;
+  var reduce = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+  function pad(n) { return (n < 10 ? '0' : '') + n; }
+  function store(k, v) { try { localStorage.setItem('ge26:' + k, v); } catch (e) {} }
+  function load(k) { try { return localStorage.getItem('ge26:' + k); } catch (e) { return null; } }
+
+  function fit() {
+    var s = Math.min(window.innerWidth / 1920, window.innerHeight / 1080);
+    stage.style.setProperty('--scale', s);
+  }
+
+  function renderPart(label) {
+    part.textContent = '';
+    if (!label) return;
+    var bits = label.split('|');
+    var b = document.createElement('b');
+    b.textContent = bits[0];
+    part.appendChild(b);
+    part.appendChild(document.createTextNode(bits[1] || ''));
+  }
+
+  function frags(slide) { return Array.prototype.slice.call(slide.querySelectorAll('.frag, .step')); }
+
+  function renderNotes() {
+    if (notesPanel.hidden) return;
+    var n = slides[current].querySelector('aside.notes');
+    notesPanel.innerHTML = '';
+    var h = document.createElement('b');
+    h.textContent = 'Notes · slide ' + (current + 1);
+    notesPanel.appendChild(h);
+    notesPanel.appendChild(document.createTextNode(n ? n.textContent : 'No notes for this slide.'));
+  }
+
+  function show(index, backwards) {
+    if (current >= 0) { slides[current].classList.remove('is-active'); leave(slides[current]); }
+    current = index;
+    slides.forEach(function (s, i) { s.classList.toggle('is-past', i < current); });
+    var slide = slides[current];
+    frags(slide).forEach(function (f) { f.classList.toggle('on', !!backwards); });
+    slide.classList.add('is-active');
+    stage.dataset.tone = slide.dataset.tone || 'light';
+    stage.dataset.chrome = slide.dataset.chrome || 'on';
+    stage.dataset.bottom = slide.dataset.bottom || '';
+    renderPart(slide.dataset.part);
+    counter.innerHTML = '<b>' + pad(current + 1) + '</b> / ' + pad(total);
+    bar.style.width = ((current + 1) / total * 100) + '%';
+    prev.disabled = current === 0;
+    next.disabled = current === total - 1;
+    if (history.replaceState) history.replaceState(null, '', '#' + (current + 1));
+    renderNotes();
+    enter(slide);
+  }
+
+  function go(index, backwards) {
+    index = Math.max(0, Math.min(total - 1, index));
+    if (index === current || busy) return;
+    var from = current >= 0 ? (slides[current].dataset.part || '').split('|')[0] : null;
+    var to = (slides[index].dataset.part || '').split('|');
+    if (from && to[0] !== from && to[0] !== '01' && !reduce) {
+      busy = true;
+      document.getElementById('wipe-num').textContent = to[0] + ' / 06';
+      document.getElementById('wipe-name').textContent = to[1];
+      wipe.classList.remove('run'); void wipe.offsetWidth; wipe.classList.add('run');
+      setTimeout(function () { show(index, backwards); }, 470);
+      setTimeout(function () { wipe.classList.remove('run'); busy = false; }, 1260);
+    } else {
+      show(index, backwards);
+    }
+  }
+
+  function forward() {
+    var list = frags(slides[current]);
+    for (var i = 0; i < list.length; i++) {
+      if (!list[i].classList.contains('on')) { list[i].classList.add('on'); return; }
+    }
+    go(current + 1, false);
+  }
+  function backward() { go(current - 1, true); }
+
+  /* ---------- Per-slide moments ---------- */
+  var timers = [];
+  var rafs = {};
+
+  function enter(slide) {
+    if (slide.classList.contains('s-hygge')) runSun();
+    if (slide.classList.contains('s-winter')) { countdown(); startSnow(); }
+    if (slide.classList.contains('s-q')) startConfetti();
+  }
+  function leave(slide) {
+    if (slide.classList.contains('s-winter')) stop('snow');
+    if (slide.classList.contains('s-q')) stop('confetti');
+    if (slide.classList.contains('s-hygge')) stop('sun');
+    slide.querySelectorAll('.flip.flipped').forEach(function (f) { f.classList.remove('flipped'); });
+  }
+  function stop(k) { if (rafs[k]) cancelAnimationFrame(rafs[k]); rafs[k] = null; }
+
+  // Hygge: the sun crosses a low December arc, the clock runs 08:37 → 15:38, then candles light.
+  var sky = document.getElementById('sky');
+  var sun = document.getElementById('sun');
+  var clock = document.getElementById('clock');
+  function setSun(t) {
+    var x = (1 - t) * (1 - t) * 80 + 2 * (1 - t) * t * 420 + t * t * 760;
+    var y = (1 - t) * (1 - t) * 560 + 2 * (1 - t) * t * 180 + t * t * 560;
+    sun.setAttribute('cx', x.toFixed(1));
+    sun.setAttribute('cy', (y + (t > .92 ? (t - .92) * 900 : 0)).toFixed(1));
+    var m = Math.round(517 + (938 - 517) * t);
+    clock.textContent = pad(Math.floor(m / 60)) + ':' + pad(m % 60);
+  }
+  function runSun() {
+    stop('sun');
+    sky.classList.remove('is-dusk');
+    if (reduce) { setSun(1); sky.classList.add('is-dusk'); return; }
+    setSun(0);
+    var start = null, delay = 900, dur = 3600;
+    function tick(ts) {
+      if (start === null) start = ts;
+      var t = Math.max(0, Math.min(1, (ts - start - delay) / dur));
+      var e = t < .5 ? 2 * t * t : 1 - Math.pow(-2 * t + 2, 2) / 2;
+      setSun(e);
+      if (t > .9) sky.classList.add('is-dusk');
+      if (t < 1) rafs.sun = requestAnimationFrame(tick); else rafs.sun = null;
+    }
+    rafs.sun = requestAnimationFrame(tick);
+  }
+
+  // Winter: live J-Dag countdown (first Friday of November, 20:59 Danish time).
+  function countdown() {
+    var el = document.getElementById('jdays');
+    var target = new Date('2026-11-06T20:59:00+01:00').getTime();
+    var diff = target - Date.now();
+    if (diff <= 0) { el.textContent = 'Now!'; return; }
+    var d = Math.ceil(diff / 86400000);
+    el.textContent = d + (d === 1 ? ' day' : ' days');
+  }
+
+  // Snow
+  var snowCv = document.getElementById('snow');
+  var flakes = [];
+  for (var i = 0; i < 170; i++) flakes.push({ x: Math.random() * 1920, y: Math.random() * 1080, r: Math.random() * 3.2 + .8, s: Math.random() * .9 + .35, d: Math.random() * Math.PI * 2 });
+  function startSnow() {
+    var ctx = snowCv.getContext('2d');
+    stop('snow');
+    function draw() {
+      ctx.clearRect(0, 0, 1920, 1080);
+      ctx.fillStyle = 'rgba(243,245,248,.75)';
+      flakes.forEach(function (f) {
+        if (!reduce) { f.y += f.s; f.d += .01; f.x += Math.sin(f.d) * .45; }
+        if (f.y > 1090) { f.y = -10; f.x = Math.random() * 1920; }
+        ctx.beginPath(); ctx.arc(f.x, f.y, f.r, 0, Math.PI * 2); ctx.fill();
+      });
+      if (!reduce) rafs.snow = requestAnimationFrame(draw);
+    }
+    draw();
+  }
+
+  // Confetti of tiny Danish flags
+  var confCv = document.getElementById('confetti');
+  function startConfetti() {
+    stop('confetti');
+    var ctx = confCv.getContext('2d');
+    ctx.clearRect(0, 0, 1920, 1080);
+    if (reduce) return;
+    var bits = [];
+    for (var i = 0; i < 120; i++) {
+      bits.push({ x: 960 + (Math.random() - .5) * 400, y: 1120, vx: (Math.random() - .5) * 26, vy: -(Math.random() * 26 + 18), r: Math.random() * Math.PI, vr: (Math.random() - .5) * .3, w: Math.random() * 18 + 26 });
+    }
+    var frames = 0;
+    function flag(b) {
+      var w = b.w, h = w * 28 / 37;
+      ctx.save(); ctx.translate(b.x, b.y); ctx.rotate(b.r); ctx.scale(1, Math.cos(frames * .12 + b.w));
+      ctx.fillStyle = '#f3f5f8'; ctx.fillRect(-w / 2 - 2, -h / 2 - 2, w + 4, h + 4);
+      ctx.fillStyle = '#c8102e'; ctx.fillRect(-w / 2, -h / 2, w, h);
+      ctx.fillStyle = '#f3f5f8';
+      ctx.fillRect(-w / 2 + w * 12 / 37, -h / 2, w * 4 / 37, h);
+      ctx.fillRect(-w / 2, -h / 2 + h * 12 / 28, w, h * 4 / 28);
+      ctx.restore();
+    }
+    function tick() {
+      frames++;
+      ctx.clearRect(0, 0, 1920, 1080);
+      var alive = false;
+      bits.forEach(function (b) {
+        b.vy += .55; b.vx *= .99; b.vy *= .99; b.x += b.vx; b.y += b.vy; b.r += b.vr;
+        if (b.y < 1160) alive = true;
+        flag(b);
+      });
+      if (alive && frames < 600) rafs.confetti = requestAnimationFrame(tick); else { ctx.clearRect(0, 0, 1920, 1080); rafs.confetti = null; }
+    }
+    setTimeout(function () { if (slides[current] && slides[current].classList.contains('s-q')) rafs.confetti = requestAnimationFrame(tick); }, 500);
+  }
+
+  /* ---------- Interactions ---------- */
+  prev.addEventListener('click', backward);
+  next.addEventListener('click', forward);
+
+  stage.querySelectorAll('[data-target]').forEach(function (btn) {
+    btn.addEventListener('click', function () {
+      var i = slides.indexOf(document.getElementById(btn.dataset.target));
+      if (i >= 0) go(i, false);
+    });
+  });
+
+  stage.querySelectorAll('.flip').forEach(function (f) {
+    f.addEventListener('click', function () {
+      var grid = f.parentNode;
+      if (grid.classList.contains('on')) { grid.classList.remove('on'); stage.querySelectorAll('.flip').forEach(function (x) { x.classList.add('flipped'); }); }
+      f.classList.toggle('flipped');
+    });
+  });
+
+  // Editable text, kept in this browser
+  stage.querySelectorAll('[data-edit]').forEach(function (el) {
+    var saved = load('t:' + el.dataset.edit);
+    if (saved) el.textContent = saved;
+    el.addEventListener('input', function () { store('t:' + el.dataset.edit, el.textContent); });
+    el.addEventListener('keydown', function (e) { if (e.key === 'Enter') { e.preventDefault(); el.blur(); } e.stopPropagation(); });
+  });
+
+  // Ambassador photos
+  var input = document.getElementById('photo-input');
+  var target = null;
+  function setPhoto(btn, url) { btn.style.backgroundImage = 'url("' + url + '")'; btn.classList.add('has-photo'); }
+  stage.querySelectorAll('[data-photo]').forEach(function (btn) {
+    var saved = load('p:' + btn.dataset.photo);
+    if (saved) setPhoto(btn, saved);
+    btn.addEventListener('click', function () { target = btn; input.value = ''; input.click(); });
+  });
+  input.addEventListener('change', function () {
+    var file = input.files && input.files[0];
+    if (!file || !target) return;
+    var img = new Image();
+    var reader = new FileReader();
+    reader.onload = function () {
+      img.onload = function () {
+        var c = document.createElement('canvas'), s = 460;
+        c.width = s; c.height = s;
+        var k = Math.max(s / img.width, s / img.height);
+        var w = img.width * k, h = img.height * k;
+        c.getContext('2d').drawImage(img, (s - w) / 2, (s - h) / 2, w, h);
+        var url = c.toDataURL('image/jpeg', .85);
+        setPhoto(target, url);
+        store('p:' + target.dataset.photo, url);
+      };
+      img.src = reader.result;
+    };
+    reader.readAsDataURL(file);
+  });
+
+  document.addEventListener('keydown', function (e) {
+    if (e.metaKey || e.ctrlKey || e.altKey) return;
+    var a = document.activeElement;
+    if (a && a.isContentEditable) return;
+    var onButton = a && (a.tagName === 'BUTTON' || a.tagName === 'A');
+    switch (e.key) {
+      case 'ArrowRight': case 'ArrowDown': case 'PageDown':
+        e.preventDefault(); forward(); break;
+      case ' ': case 'Enter':
+        if (onButton) return;
+        e.preventDefault(); forward(); break;
+      case 'ArrowLeft': case 'ArrowUp': case 'PageUp': case 'Backspace':
+        e.preventDefault(); backward(); break;
+      case 'Home': e.preventDefault(); go(0, false); break;
+      case 'End': e.preventDefault(); go(total - 1, true); break;
+      case 'n': case 'N':
+        notesPanel.hidden = !notesPanel.hidden; renderNotes(); break;
+      case 'f': case 'F':
+        try {
+          if (!document.fullscreenElement && document.documentElement.requestFullscreen) document.documentElement.requestFullscreen().catch(function () {});
+          else if (document.exitFullscreen) document.exitFullscreen().catch(function () {});
+        } catch (err) {}
+        break;
+    }
+  });
+
+  var tx = null, ty = null;
+  document.addEventListener('touchstart', function (e) { tx = e.touches[0].clientX; ty = e.touches[0].clientY; }, { passive: true });
+  document.addEventListener('touchend', function (e) {
+    if (tx === null) return;
+    var dx = e.changedTouches[0].clientX - tx, dy = e.changedTouches[0].clientY - ty;
+    if (Math.abs(dx) > 50 && Math.abs(dx) > Math.abs(dy)) { if (dx < 0) forward(); else backward(); }
+    tx = ty = null;
+  });
+
+  window.addEventListener('resize', fit);
+  window.addEventListener('hashchange', function () {
+    var n = parseInt(location.hash.slice(1), 10);
+    if (!isNaN(n) && n - 1 !== current) go(n - 1, false);
+  });
+
+  setTimeout(function () { document.getElementById('hint').classList.add('gone'); }, 5000);
+
+  fit();
+  var start = parseInt(location.hash.slice(1), 10);
+  show(isNaN(start) ? 0 : Math.max(0, Math.min(total - 1, start - 1)), false);
+})();
+</script>
