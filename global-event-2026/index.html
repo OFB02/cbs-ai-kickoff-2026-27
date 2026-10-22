@@ -342,7 +342,9 @@
 
   /* ================= Surprises ================= */
   .s-surp { display: flex; flex-direction: column; gap: 52px; }
-  .surp-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 24px; }
+  .surp-grid { display: grid; grid-template-columns: repeat(6, 1fr); gap: 24px; }
+  .surp-grid .surp { grid-column: span 2; }
+  .surp-grid .surp:nth-child(n+4) { grid-column: span 3; }
   .surp { position: relative; border-radius: 28px; padding: 44px 42px 48px; background: rgba(243,245,248,.06); border: 1px solid rgba(169,186,211,.22); display: flex; flex-direction: column; gap: 14px; overflow: hidden; transition: transform .3s ease, background .3s ease; }
   .surp:hover { transform: translateY(-6px) rotate(-.6deg); background: rgba(243,245,248,.1); }
   .surp .tag { font-family: var(--mono); font-size: 17px; letter-spacing: .1em; text-transform: uppercase; color: var(--amber); }
@@ -703,8 +705,7 @@
         <div class="surp rv" style="--i:2"><span class="tag">Birthdays</span><h3>Flags on everything</h3><p>On cakes, in trees, at the airport. It’s about celebrating, not politics.</p></div>
         <div class="surp rv" style="--i:3"><span class="tag">Free money</span><h3>Pant</h3><p>Return cans and bottles at the supermarket and get 1–3 kr back for each.</p></div>
         <div class="surp rv" style="--i:4"><span class="tag">Parenting</span><h3>Babies nap outside</h3><p>In prams outside cafés, even in winter. Totally normal here.</p></div>
-        <div class="surp rv" style="--i:5"><span class="tag">Swimming pools</span><h3>Naked showers</h3><p>You shower without your swimsuit before you swim. Everyone does.</p></div>
-        <div class="surp rv" style="--i:6"><span class="tag">January</span><h3>Winter swimming</h3><p>People jump into the harbour in January. Then straight into a sauna.</p></div>
+        <div class="surp rv" style="--i:5"><span class="tag">January</span><h3>Winter swimming</h3><p>People jump into the harbour in January. Then straight into a sauna.</p></div>
       </div>
       <aside class="notes">Ask: which one surprised you most? Pant: the label on cans and bottles shows the deposit (A = 1 kr, B = 1.50 kr, C = 3 kr); return them in the machines at the supermarket. Ambassadors: add your own biggest surprise.</aside>
     </section>
