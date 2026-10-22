@@ -343,11 +343,11 @@
   /* ================= Surprises ================= */
   .s-surp { display: flex; flex-direction: column; gap: 52px; }
   .surp-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 24px; }
-  .surp { position: relative; border-radius: 28px; padding: 36px 38px 38px; background: rgba(243,245,248,.06); border: 1px solid rgba(169,186,211,.22); display: flex; flex-direction: column; gap: 14px; overflow: hidden; transition: transform .3s ease, background .3s ease; }
+  .surp { position: relative; border-radius: 28px; padding: 44px 42px 48px; background: rgba(243,245,248,.06); border: 1px solid rgba(169,186,211,.22); display: flex; flex-direction: column; gap: 14px; overflow: hidden; transition: transform .3s ease, background .3s ease; }
   .surp:hover { transform: translateY(-6px) rotate(-.6deg); background: rgba(243,245,248,.1); }
   .surp .tag { font-family: var(--mono); font-size: 17px; letter-spacing: .1em; text-transform: uppercase; color: var(--amber); }
-  .surp h3 { font-family: var(--display); font-weight: 800; font-size: 42px; letter-spacing: -0.025em; line-height: 1.05; }
-  .surp p { font-size: 23px; line-height: 1.45; color: var(--ice); }
+  .surp h3 { font-family: var(--display); font-weight: 800; font-size: 46px; letter-spacing: -0.025em; line-height: 1.05; }
+  .surp p { font-size: 26px; line-height: 1.45; color: var(--ice); }
 
   /* ================= Bikes ================= */
   .s-bikes { display: flex; flex-direction: column; gap: 46px; }
@@ -410,15 +410,16 @@
   /* ================= Hangout ================= */
   .s-hang { display: flex; flex-direction: column; gap: 56px; }
   .hang-cols { display: grid; grid-template-columns: repeat(3, 1fr); gap: 28px; }
-  .hang { border-radius: 28px; padding: 38px 38px 40px; background: rgba(243,245,248,.06); border: 1px solid rgba(169,186,211,.22); display: flex; flex-direction: column; gap: 26px; }
+  .hang { border-radius: 28px; padding: 46px 42px 50px; background: rgba(243,245,248,.06); border: 1px solid rgba(169,186,211,.22); display: flex; flex-direction: column; gap: 26px; }
   .hang h3 { display: flex; align-items: center; gap: 14px; font-family: var(--mono); font-weight: 500; font-size: 20px; letter-spacing: .14em; text-transform: uppercase; color: var(--amber); }
   .hang h3 svg { width: 26px; height: 26px; }
-  .spot { display: flex; flex-direction: column; gap: 6px; padding-top: 22px; border-top: 1px solid rgba(169,186,211,.22); }
-  .spot b { font-family: var(--display); font-weight: 800; font-size: 34px; letter-spacing: -0.02em; }
-  .spot span { font-size: 22px; line-height: 1.45; color: var(--ice); }
+  .spot { display: flex; flex-direction: column; gap: 8px; padding-top: 28px; border-top: 1px solid rgba(169,186,211,.22); }
+  .spot b { font-family: var(--display); font-weight: 800; font-size: 40px; letter-spacing: -0.02em; }
+  .spot span { font-size: 25px; line-height: 1.45; color: var(--ice); }
 
   /* ================= Winter ================= */
   .s-winter { background: linear-gradient(180deg, #08111f 0%, #13223a 100%); color: var(--snow); display: grid; grid-template-columns: 620px 1fr; gap: 100px; }
+  .s-winter .headline { color: var(--snow); }
   .s-winter canvas { position: absolute; inset: 0; width: 100%; height: 100%; pointer-events: none; }
   .w-left { position: relative; display: flex; flex-direction: column; gap: 40px; }
   .countdown { background: var(--red); border-radius: 30px; padding: 36px 40px; display: flex; flex-direction: column; gap: 6px; }
@@ -431,6 +432,27 @@
   .timeline .d { font-family: var(--mono); font-size: 26px; color: var(--amber); }
   .timeline b { display: block; font-family: var(--display); font-weight: 800; font-size: 34px; letter-spacing: -0.02em; margin-bottom: 4px; }
   .timeline span { font-size: 22px; line-height: 1.45; color: var(--ice); }
+
+  /* ================= ISA ================= */
+  .s-isa { display: grid; grid-template-columns: 1fr 760px; gap: 90px; align-items: center; }
+  .isa-copy { display: flex; flex-direction: column; gap: 34px; min-width: 0; }
+  .isa-copy .lede { font-size: 28px; }
+  .offers { display: flex; flex-direction: column; }
+  .offers li { display: grid; grid-template-columns: 300px 1fr; gap: 26px; align-items: baseline; padding: 20px 0; border-top: 1.5px solid var(--line); }
+  .offers li:last-child { border-bottom: 1.5px solid var(--line); }
+  .offers b { font-family: var(--display); font-weight: 800; font-size: 32px; letter-spacing: -0.02em; }
+  .offers span { font-size: 24px; line-height: 1.45; color: var(--mute); }
+  .reach { display: flex; flex-wrap: wrap; gap: 16px; align-items: center; }
+  .reach .pill { display: inline-flex; align-items: center; gap: 12px; font-size: 24px; padding: 14px 26px; border-radius: 999px; background: var(--ink); color: var(--snow); border: 0; }
+  .reach .pill.mail { font-family: var(--mono); cursor: pointer; transition: background .2s; }
+  .reach .pill.mail:hover { background: var(--red); }
+  .reach .pill.mail:focus-visible { outline: 3px solid var(--red); outline-offset: 4px; }
+  .reach .pill svg { width: 22px; height: 22px; }
+  .reach .copied { font-family: var(--mono); font-size: 18px; color: var(--red); opacity: 0; transition: opacity .3s; }
+  .reach .copied.on { opacity: 1; }
+  .people { position: relative; height: 790px; border-radius: 34px; overflow: hidden; background: radial-gradient(600px 500px at 50% 45%, rgba(200,16,46,.22), transparent 70%), linear-gradient(165deg, var(--deep), var(--night)); }
+  .people canvas { position: absolute; inset: 0; width: 100%; height: 100%; }
+  .people .cap { position: absolute; left: 40px; bottom: 34px; right: 40px; font-family: var(--mono); font-size: 19px; letter-spacing: .08em; text-transform: uppercase; color: var(--ice); }
 
   /* ================= Questions ================= */
   .s-q { padding: 0; overflow: hidden; }
@@ -525,7 +547,7 @@
         <button type="button" class="rv" style="--i:1" data-target="s-danes"><span class="num">02</span><span class="ttl">Helpful to know</span><span class="dsc">How Danes think, talk and hygge</span></button>
         <button type="button" class="rv" style="--i:2" data-target="s-chal"><span class="num">03</span><span class="ttl">The hard parts</span><span class="dsc">Housing, paperwork, darkness, friends</span></button>
         <button type="button" class="rv" style="--i:3" data-target="s-surp"><span class="num">04</span><span class="ttl">Surprises</span><span class="dsc">The “wait, what?!” moments</span></button>
-        <button type="button" class="rv" style="--i:4" data-target="s-footing"><span class="num">05</span><span class="ttl">Finding your feet</span><span class="dsc">What helped us, plus food, bars and winter</span></button>
+        <button type="button" class="rv" style="--i:4" data-target="s-footing"><span class="num">05</span><span class="ttl">Finding your feet</span><span class="dsc">What helped us, food, bars, winter, and how ISA helps</span></button>
         <button type="button" class="rv" style="--i:5" data-target="s-q"><span class="num">06</span><span class="ttl">Your questions</span><span class="dsc">Anything. Seriously, anything.</span></button>
       </nav>
       <aside class="notes">Quick overview. You can click a card to jump to that part.</aside>
@@ -579,7 +601,7 @@
     <section class="slide t-light s-phrases" data-tone="light" data-part="02|Helpful to know" aria-label="Your Danish survival kit">
       <h2 class="headline rv" style="--i:0">Your Danish survival kit</h2>
       <p class="lede rv" style="--i:1">Eight words that get you surprisingly far. Say them out loud with us.</p>
-      <div class="flips step">
+      <div class="flips beat">
         <button type="button" class="flip rv" style="--i:2"><span class="flip-inner"><span class="face front"><span class="word">Hej</span><span class="tap">Tap to flip</span></span><span class="face back"><span class="mean">Hi!</span><span class="use">And “hej hej” means bye. Confusing, we know.</span></span></span></button>
         <button type="button" class="flip rv" style="--i:3"><span class="flip-inner"><span class="face front"><span class="word">Tak</span><span class="tap">Tap to flip</span></span><span class="face back"><span class="mean">Thanks</span><span class="use">For everything. Literally everything.</span></span></span></button>
         <button type="button" class="flip rv" style="--i:4"><span class="flip-inner"><span class="face front"><span class="word">Undskyld</span><span class="tap">Tap to flip</span></span><span class="face back"><span class="mean">Sorry / excuse me</span><span class="use">Squeezing past on a full bus.</span></span></span></button>
@@ -783,6 +805,29 @@
       <aside class="notes">Something to look forward to in the dark months. J-Dag is the first Friday of November, this year Friday 6 November: Tuborg’s Christmas beer is released at 20:59 and bars get very busy. Tivoli opens its Christmas season around mid-November. If classmates invite you to a julefrokost, go! Danes celebrate Christmas on the evening of the 24th. On New Year’s Eve people watch the King’s speech, eat kransekage, and jump into the new year from a chair. Not going home for Christmas? Ask around, many people invite others in.</aside>
     </section>
 
+    <!-- 05 · ISA -->
+    <section class="slide t-white s-isa" data-tone="light" data-part="05|Finding your feet" aria-label="Find your people with ISA">
+      <div class="isa-copy">
+        <h2 class="headline rv" style="--i:0">Find your people with <em>ISA</em></h2>
+        <p class="lede rv" style="--i:1">We’re international students too. ISA plans events all year, so you can meet people who get it, and get honest advice from people who’ve been through it.</p>
+        <ul class="offers rv" style="--i:2">
+          <li><b>Events all year</b><span>Social nights, Danish culture and tips for academic life.</span></li>
+          <li><b>Real advice</b><span>Housing, exams, paperwork, homesickness. Ask us anything.</span></li>
+          <li><b>A community</b><span>Meet other internationals, and the Danes who show up too.</span></li>
+        </ul>
+        <div class="reach rv" style="--i:3">
+          <button type="button" class="pill mail" id="copy-mail" aria-label="Copy the ISA email address"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linejoin="round"><rect x="3" y="5" width="18" height="14" rx="2"/><path d="M3 7l9 6 9-6"/></svg>isa@cbs.dk</button>
+          <span class="pill"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="9" cy="8" r="3.5"/><circle cx="17" cy="9" r="2.5"/><path d="M2.5 19c0-4 13-4 13 0M15 14.5c3-.6 6.5.4 6.5 3.5"/></svg>Follow ISA on Facebook</span>
+          <span class="copied" id="copied">Copied!</span>
+        </div>
+      </div>
+      <div class="people rv" style="--i:1">
+        <canvas id="people" width="760" height="790" aria-label="Scattered dots come together into small groups, and a red dot labelled you joins one of them"></canvas>
+        <p class="cap">One event at a time, strangers become your people</p>
+      </div>
+      <aside class="notes">This is the key message: you don’t have to figure Denmark out alone. ISA is a group of current international students who volunteer to plan events through the whole year and help newcomers settle in. Come to our events, bring a friend, or come alone and leave with new ones. Questions any time: isa@cbs.dk or find us on Facebook. Mention any upcoming ISA event dates here.</aside>
+    </section>
+
     <!-- 06 · Questions -->
     <section class="slide t-red s-q" id="s-q" data-tone="red" data-chrome="off" data-part="06|Your questions" aria-label="Questions">
       <div class="flag-bar v"></div>
@@ -798,7 +843,7 @@
           <li>How do exams work here?</li>
           <li>What do you wish you’d known?</li>
         </ul>
-        <p class="q-foot rv" style="--i:4">Next up: quiz, games and a Danish dinner. Velbekomme!</p>
+        <p class="q-foot rv" style="--i:4">Next up: quiz, games and a Danish dinner. Velbekomme! · isa@cbs.dk</p>
       </div>
       <aside class="notes">Open the floor. If it’s quiet, pick one of the example questions and answer it yourselves to get things going. End by thanking everyone and pointing them to the quiz, games and the Danish dinner. “Velbekomme” is what Danes say when serving food, roughly “enjoy your meal”.</aside>
     </section>
@@ -852,14 +897,22 @@
     part.appendChild(document.createTextNode(bits[1] || ''));
   }
 
-  function frags(slide) { return Array.prototype.slice.call(slide.querySelectorAll('.frag, .step')); }
+  var talkStart = null;
+  function notesHead() {
+    var t = talkStart ? Math.floor((Date.now() - talkStart) / 1000) : 0;
+    return 'Notes · slide ' + (current + 1) + ' of ' + total + ' · ' + pad(Math.floor(t / 60)) + ':' + pad(t % 60) + ' of 20:00';
+  }
+  setInterval(function () { var h = document.getElementById('notes-head'); if (h && !notesPanel.hidden) h.textContent = notesHead(); }, 1000);
+
+  function frags(slide) { return Array.prototype.slice.call(slide.querySelectorAll('.frag, .beat')); }
 
   function renderNotes() {
     if (notesPanel.hidden) return;
     var n = slides[current].querySelector('aside.notes');
     notesPanel.innerHTML = '';
     var h = document.createElement('b');
-    h.textContent = 'Notes · slide ' + (current + 1);
+    h.id = 'notes-head';
+    h.textContent = notesHead();
     notesPanel.appendChild(h);
     notesPanel.appendChild(document.createTextNode(n ? n.textContent : 'No notes for this slide.'));
   }
@@ -902,6 +955,7 @@
   }
 
   function forward() {
+    if (!talkStart) talkStart = Date.now();
     var list = frags(slides[current]);
     for (var i = 0; i < list.length; i++) {
       if (!list[i].classList.contains('on')) { list[i].classList.add('on'); return; }
@@ -918,11 +972,13 @@
     if (slide.classList.contains('s-hygge')) runSun();
     if (slide.classList.contains('s-winter')) { countdown(); startSnow(); }
     if (slide.classList.contains('s-q')) startConfetti();
+    if (slide.classList.contains('s-isa')) startPeople();
   }
   function leave(slide) {
     if (slide.classList.contains('s-winter')) stop('snow');
     if (slide.classList.contains('s-q')) stop('confetti');
     if (slide.classList.contains('s-hygge')) stop('sun');
+    if (slide.classList.contains('s-isa')) stop('people');
     slide.querySelectorAll('.flip.flipped').forEach(function (f) { f.classList.remove('flipped'); });
   }
   function stop(k) { if (rafs[k]) cancelAnimationFrame(rafs[k]); rafs[k] = null; }
@@ -1021,6 +1077,66 @@
     }
     setTimeout(function () { if (slides[current] && slides[current].classList.contains('s-q')) rafs.confetti = requestAnimationFrame(tick); }, 500);
   }
+
+  // ISA: scattered dots drift together into small groups; the red "you" dot joins last.
+  var peopleCv = document.getElementById('people');
+  var groups = [[220, 230], [540, 220], [380, 420], [190, 560], [560, 560]];
+  var dots = [];
+  (function () {
+    for (var i = 0; i < 50; i++) {
+      var g = i % groups.length, a = Math.random() * Math.PI * 2, d = 24 + Math.random() * 58;
+      dots.push({ sx: Math.random() * 760, sy: Math.random() * 700, tx: groups[g][0] + Math.cos(a) * d, ty: groups[g][1] + Math.sin(a) * d, g: g, r: 6 + Math.random() * 4, ph: Math.random() * 6.3, delay: Math.random() * 700 });
+    }
+    dots.push({ sx: 720, sy: 60, tx: groups[2][0] + 6, ty: groups[2][1] - 4, g: 2, r: 12, ph: 0, delay: 1500, you: true });
+  })();
+  function startPeople() {
+    stop('people');
+    var ctx = peopleCv.getContext('2d');
+    var t0 = null, dur = 2200;
+    function ease(t) { return 1 - Math.pow(1 - t, 3); }
+    function frame(ts) {
+      if (t0 === null) t0 = ts;
+      var el = reduce ? 1e6 : ts - t0;
+      ctx.clearRect(0, 0, 760, 790);
+      var pos = dots.map(function (d) {
+        var k = ease(Math.max(0, Math.min(1, (el - 400 - d.delay) / dur)));
+        var wob = reduce ? 0 : Math.sin(el / 900 + d.ph) * 3;
+        return { x: d.sx + (d.tx - d.sx) * k + wob, y: d.sy + (d.ty - d.sy) * k + Math.cos(el / 1100 + d.ph) * (reduce ? 0 : 3), k: k, d: d };
+      });
+      ctx.lineWidth = 2;
+      for (var i = 0; i < pos.length; i++) for (var j = i + 1; j < pos.length; j++) {
+        var p = pos[i], q = pos[j];
+        if (p.d.g !== q.d.g) continue;
+        var dist = Math.hypot(p.x - q.x, p.y - q.y);
+        if (dist > 120) continue;
+        var a = Math.min(p.k, q.k) * (1 - dist / 120) * .7;
+        if (a <= 0.02) continue;
+        ctx.strokeStyle = (p.d.you || q.d.you) ? 'rgba(255,90,110,' + a + ')' : 'rgba(169,186,211,' + a + ')';
+        ctx.beginPath(); ctx.moveTo(p.x, p.y); ctx.lineTo(q.x, q.y); ctx.stroke();
+      }
+      pos.forEach(function (p) {
+        ctx.beginPath(); ctx.arc(p.x, p.y, p.d.r, 0, Math.PI * 2);
+        ctx.fillStyle = p.d.you ? '#c8102e' : (p.k > .98 ? '#f3f5f8' : 'rgba(243,245,248,.55)');
+        ctx.fill();
+        if (p.d.you) {
+          ctx.lineWidth = 4; ctx.strokeStyle = '#f3f5f8'; ctx.stroke(); ctx.lineWidth = 2;
+          ctx.font = '600 26px "Instrument Sans", Arial, sans-serif';
+          ctx.fillStyle = '#ffb547'; ctx.fillText('you', p.x + 20, p.y - 14);
+        }
+      });
+      if (!reduce) rafs.people = requestAnimationFrame(frame);
+    }
+    rafs.people = requestAnimationFrame(frame);
+  }
+
+  var copyBtn = document.getElementById('copy-mail');
+  copyBtn.addEventListener('click', function () {
+    var done = function () { var c = document.getElementById('copied'); c.classList.add('on'); setTimeout(function () { c.classList.remove('on'); }, 1600); };
+    try {
+      navigator.clipboard.writeText('isa@cbs.dk').then(done, function () { selectMail(); });
+    } catch (e) { selectMail(); }
+    function selectMail() { var r = document.createRange(); r.selectNodeContents(copyBtn); var sel = window.getSelection(); sel.removeAllRanges(); sel.addRange(r); }
+  });
 
   /* ---------- Interactions ---------- */
   prev.addEventListener('click', backward);
