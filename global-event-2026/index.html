@@ -347,15 +347,10 @@
   .work p { font-size: 25px; line-height: 1.45; color: #d8e0ec; }
   .work p b { color: var(--snow); }
 
-  .sos { display: flex; flex-direction: column; gap: 16px; }
-  .sos-lbl { font-family: var(--mono); font-size: 20px; letter-spacing: .12em; text-transform: uppercase; color: var(--red); }
-  .sos-row { display: grid; grid-template-columns: 1fr 1fr 1fr 1.35fr 1.3fr; gap: 18px; }
-  .sos-tile { background: var(--ink); color: var(--snow); border-radius: 22px; padding: 24px 26px; display: flex; flex-direction: column; gap: 8px; }
-  .sos-tile.em { background: var(--red); }
-  .sos-tile b { white-space: nowrap; font-family: var(--mono); font-weight: 500; font-size: 48px; line-height: 1; color: var(--amber); letter-spacing: -0.02em; }
-  .sos-tile.em b { color: var(--snow); }
-  .sos-tile b.w { font-family: var(--display); font-weight: 800; font-size: 30px; line-height: 1.1; color: var(--amber); letter-spacing: -0.01em; padding: 6px 0 7px; }
-  .sos-tile span { font-size: 20px; line-height: 1.4; color: #d8e0ec; }
+  .pquote { position: relative; background: var(--ink); color: var(--snow); border-radius: 28px; padding: 40px 56px 40px 150px; display: flex; flex-direction: column; gap: 14px; }
+  .pq-mark { position: absolute; left: 40px; top: 6px; font-family: var(--display); font-weight: 800; font-size: 190px; line-height: 1; color: var(--red); }
+  .pq-text { font-family: var(--display); font-weight: 700; font-size: 40px; line-height: 1.2; letter-spacing: -0.015em; text-wrap: balance; }
+  .pq-who { font-family: var(--mono); font-size: 22px; color: var(--amber); }
   /* ================= Surprises ================= */
   .s-surp { display: flex; flex-direction: column; gap: 52px; }
   .surp-grid { display: grid; grid-template-columns: repeat(6, 1fr); gap: 24px; }
@@ -756,17 +751,12 @@
         <div class="step" style="--i:3"><span class="node">4</span><h3>NemKonto</h3><p>A Danish bank account linked to your CPR.</p></div>
         <div class="step" style="--i:4"><span class="node">5</span><h3>Digital Post</h3><p>Official letters land here. Check it often.</p></div>
       </div>
-      <div class="sos rv" style="--i:2">
-        <p class="sos-lbl">Save these in your phone</p>
-        <div class="sos-row">
-          <div class="sos-tile em"><b>112</b><span>Emergency: ambulance, fire, police</span></div>
-          <div class="sos-tile"><b>1813</b><span>Medical helpline. Call before going to the ER</span></div>
-          <div class="sos-tile"><b>114</b><span>Police, when it’s not an emergency</span></div>
-          <div class="sos-tile"><b class="w">Studenter­rådgivningen</b><span>Free counselling for students</span></div>
-          <div class="sos-tile"><b>70 201 201</b><span>Livslinien. Someone to talk to, anonymously</span></div>
-        </div>
+      <div class="pquote rv" style="--i:2">
+        <span class="pq-mark" aria-hidden="true">“</span>
+        <p class="pq-text">I need a CPR number to open a bank account, an address to get a CPR number, and a bank account to rent an address.</p>
+        <p class="pq-who">— Every international student, week one</p>
       </div>
-      <aside class="notes">Order matters: the CPR number (International House or your municipality) comes first. With it you get the yellow health card with your own GP, and healthcare is free. MitID is the digital ID for almost everything. NemKonto is the account the state and employers pay into. Digital Post is where official letters arrive; missing them can mean fines. Then the numbers to save: 112 for emergencies, 1813 for the medical helpline in the Capital Region (call before going to the ER), 114 for police when it’s not an emergency. Studenterrådgivningen offers free counselling to students, and Livslinien (70 201 201) is an anonymous helpline if someone is struggling. Homesickness and the dark months are hard for many people, so say clearly that asking for help is normal.</aside>
+      <aside class="notes">Order matters: the CPR number (International House or your municipality) comes first. With it you get the yellow health card with your own GP, and healthcare is free. MitID is the digital ID for almost everything. NemKonto is the account the state and employers pay into. Digital Post is where official letters arrive; missing them can mean fines. Then the quote: the CPR, bank, address loop is something almost everyone hits. It does get sorted, it just takes patience.</aside>
     </section>
 
     <!-- 04 · Surprises -->
