@@ -331,7 +331,7 @@
   .stamp.frag.on { transform: rotate(-14deg) scale(1); }
 
   /* ================= Paperwork ================= */
-  .s-paper { display: flex; flex-direction: column; gap: 70px; }
+  .s-paper { display: flex; flex-direction: column; gap: 56px; }
   .steps { position: relative; display: grid; grid-template-columns: repeat(5, 1fr); gap: 28px; }
   .track { position: absolute; left: 10%; right: 10%; top: 49px; height: 4px; background: var(--line); border-radius: 2px; }
   .track i { position: absolute; inset: 0; background: var(--red); transform-origin: left; border-radius: 2px; }
@@ -347,6 +347,15 @@
   .work p { font-size: 25px; line-height: 1.45; color: #d8e0ec; }
   .work p b { color: var(--snow); }
 
+  .sos { display: flex; flex-direction: column; gap: 16px; }
+  .sos-lbl { font-family: var(--mono); font-size: 20px; letter-spacing: .12em; text-transform: uppercase; color: var(--red); }
+  .sos-row { display: grid; grid-template-columns: 1fr 1fr 1fr 1.35fr 1.3fr; gap: 18px; }
+  .sos-tile { background: var(--ink); color: var(--snow); border-radius: 22px; padding: 24px 26px; display: flex; flex-direction: column; gap: 8px; }
+  .sos-tile.em { background: var(--red); }
+  .sos-tile b { white-space: nowrap; font-family: var(--mono); font-weight: 500; font-size: 48px; line-height: 1; color: var(--amber); letter-spacing: -0.02em; }
+  .sos-tile.em b { color: var(--snow); }
+  .sos-tile b.w { font-family: var(--display); font-weight: 800; font-size: 30px; line-height: 1.1; color: var(--amber); letter-spacing: -0.01em; padding: 6px 0 7px; }
+  .sos-tile span { font-size: 20px; line-height: 1.4; color: #d8e0ec; }
   /* ================= Surprises ================= */
   .s-surp { display: flex; flex-direction: column; gap: 52px; }
   .surp-grid { display: grid; grid-template-columns: repeat(6, 1fr); gap: 24px; }
@@ -747,11 +756,17 @@
         <div class="step" style="--i:3"><span class="node">4</span><h3>NemKonto</h3><p>A Danish bank account linked to your CPR.</p></div>
         <div class="step" style="--i:4"><span class="node">5</span><h3>Digital Post</h3><p>Official letters land here. Check it often.</p></div>
       </div>
-      <div class="work rv" style="--i:2">
-        <span class="big">20 h</span>
-        <p><b>Non-EU students:</b> your permit normally lets you work 20 hours a week during the semester and full-time in June, July and August. Always check your own permit on nyidanmark.dk.</p>
+      <div class="sos rv" style="--i:2">
+        <p class="sos-lbl">Save these in your phone</p>
+        <div class="sos-row">
+          <div class="sos-tile em"><b>112</b><span>Emergency: ambulance, fire, police</span></div>
+          <div class="sos-tile"><b>1813</b><span>Medical helpline. Call before going to the ER</span></div>
+          <div class="sos-tile"><b>114</b><span>Police, when it’s not an emergency</span></div>
+          <div class="sos-tile"><b class="w">Studenter­rådgivningen</b><span>Free counselling for students</span></div>
+          <div class="sos-tile"><b>70 201 201</b><span>Livslinien. Someone to talk to, anonymously</span></div>
+        </div>
       </div>
-      <aside class="notes">Order matters: the CPR number (International House or your municipality) comes first. With it you get the yellow health card with your own GP, and healthcare is free. MitID is the digital ID for almost everything. NemKonto is the account the state and employers pay into. Digital Post is where official letters arrive; missing them can mean fines. Non-EU work rules: 20 hours a week in the semester, full-time in the summer months. Working more can cost you your residence permit.</aside>
+      <aside class="notes">Order matters: the CPR number (International House or your municipality) comes first. With it you get the yellow health card with your own GP, and healthcare is free. MitID is the digital ID for almost everything. NemKonto is the account the state and employers pay into. Digital Post is where official letters arrive; missing them can mean fines. Then the numbers to save: 112 for emergencies, 1813 for the medical helpline in the Capital Region (call before going to the ER), 114 for police when it’s not an emergency. Studenterrådgivningen offers free counselling to students, and Livslinien (70 201 201) is an anonymous helpline if someone is struggling. Homesickness and the dark months are hard for many people, so say clearly that asking for help is normal.</aside>
     </section>
 
     <!-- 04 · Surprises -->
